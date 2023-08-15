@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <head>
+        
+    <h1>Choose KRX listed companies</h1>
+
+    </head>
+
+    <main>
+        <div>
+            <form action="/dashboard">
+                <label for="company">Choose a company: </label>
+                <select name="company" id="company">
+                    {% for key, value in mydict.items() %}
+                        <option value="{{key}}" 
+                        {% if (key == target) %} selected="selected" {% endif %}
+                        >
+                        {{value}}
+                        </option>
+                    {% endfor %}
+                </select>
+                <br><br>
+                <input type="submit" value="submit">
+            </form>
+        </div>
+    </main>
+
+    
+</body>
+</html>

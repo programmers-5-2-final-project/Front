@@ -1,16 +1,23 @@
-from flask import Flask, render_template, render_template_string
-from sqlalchemy import create_engine, text
-from dotenv import dotenv_values
-from flask_sqlalchemy import SQLAlchemy
-import psycopg2
-import json
-from db.postgres import DataPoint, app, db
+from flask import Flask, render_template, redirect, url_for, request, Response
+from db_model.postgres import KrxStock, KrxList, app, db
+
+@app.route("/index", methods=["GET", "POST"])
+def choose():
+    krx_list = db.session.query(KrxList).all()
+    symbols = {}
+    for row in krx_list[1:]:
+        symbols[row.code] = row.name
+
+    if request.method == "GET":
+        return render_template("index.html", mydict = symbols)
 
 @app.route("/dashboard")
 def dashboard():
-    datapoints = db.session.query(DataPoint).filter(DataPoint.date.like('%-%-%')).all()
+    symbol = request.args.get("company", "")
+    print("****", symbol)
+    krx_stock = db.session.query(KrxStock).filter(KrxStock.date.like('%-%-%')).all()
     data=[]
-    for row in datapoints:
+    for row in krx_stock:
         row = row.__dict__
         row.pop("_sa_instance_state")
         row['close'] = int(row['close'])

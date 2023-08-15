@@ -1,4 +1,4 @@
 .venv/
 flask/.flaskenv
 test/
-flask/db/__pycache__/
+flask/db_model/__pycache__/
