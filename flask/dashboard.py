@@ -1,5 +1,5 @@
 from flask import Flask, render_template, redirect, url_for, request, Response
-from db_model.postgres import KrxStock, KrxList, app, db
+from db_model.postgres import *
 
 @app.route("/index", methods=["GET", "POST"])
 def choose():
@@ -15,7 +15,8 @@ def choose():
 def dashboard():
     symbol = request.args.get("company", "")
     print("****", symbol)
-    krx_stock = db.session.query(KrxStock).filter(KrxStock.date.like('%-%-%')).all()
+    table_classes = globals()
+    krx_stock = db.session.query(table_classes[f"Krx_stock_{symbol}"]).filter(table_classes[f"Krx_stock_{symbol}"].date.like('%-%-%')).all()
     data=[]
     for row in krx_stock:
         row = row.__dict__
@@ -26,4 +27,8 @@ def dashboard():
     return render_template('dashboard.html', data=data)
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port="8082", debug=True)
+    with app.app_context():
+        classes = create_table_models()
+        for k, v in classes.items():
+            globals()[k] = v
+        app.run(host="0.0.0.0", port="8082",debug=True)

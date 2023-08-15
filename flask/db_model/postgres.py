@@ -1,6 +1,8 @@
 from flask import Flask
 from dotenv import dotenv_values
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import text
+import re
 
 app = Flask(__name__, template_folder='../templates')
 CONFIG = dotenv_values(".flaskenv")
@@ -18,8 +20,8 @@ with app.app_context():
     db.reflect()
 
 class KrxStock(db.Model):
-    __tablename__ = 'krx_stock_000210'
-    __table_args__ = {'extend_existing': True} 
+    __abstract__ = True
+    __table_args__ = {'extend_existing': True}
     date = db.Column(db.String(50), primary_key=True)
     open = db.Column(db.String(50))  
     high = db.Column(db.String(50))
@@ -47,3 +49,18 @@ class KrxList(db.Model):
     marcap = db.Column(db.String(50))
     stocks = db.Column(db.String(50))
     marketid = db.Column(db.String(50))
+
+def get_table_names():
+    tables = db.session.execute(text("SELECT code FROM krx_list;"))
+    table_names = ["krx_stock_"+table[0] for table in tables]
+    return table_names
+
+def create_table_models():
+    table_names = get_table_names()
+    classes={}
+    for table_name in table_names:
+        if bool(re.search(r'krx_stock_\d', table_name)):
+            model_name = table_name.capitalize()
+            table_class = type(model_name, (KrxStock, db.Model), {"__tablename__": table_name})
+            classes[model_name] = table_class
+    return classes
