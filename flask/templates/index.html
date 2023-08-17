@@ -8,26 +8,22 @@
 <body>
     <head>
         
-    <h1>Choose KRX listed companies</h1>
+    <h1>KRX listed companies</h1>
 
     </head>
 
     <main>
         <div>
-            <form action="/dashboard">
-                <label for="company">Choose a company: </label>
-                <select name="company" id="company">
-                    {% for key, value in mydict.items() %}
-                        <option value="{{key}}" 
-                        {% if (key == target) %} selected="selected" {% endif %}
-                        >
-                        {{value}}
-                        </option>
-                    {% endfor %}
-                </select>
-                <br><br>
-                <input type="submit" value="submit">
+            <form method="POST">
+                <input type="text" name="search" placeholder="Search items" />
+                <button type="submit">Search</button>
             </form>
+            <h2>Results</h2>
+            <ul>
+                {% for key, name in mydict.items() %}
+                    <li><a href="/dashboard?company={{key}}">{{ name }}</a></li>
+                {% endfor %}
+            </ul>
         </div>
     </main>
 

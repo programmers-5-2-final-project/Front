@@ -1,15 +1,27 @@
 from flask import Flask, render_template, redirect, url_for, request, Response
 from db_model.postgres import *
 
+def search_data(search_term, symbols):
+    results = {}
+    for symbol, name in symbols.items():
+        if search_term.lower() in name.lower():
+            results[symbol] = name
+    
+    return results
+
 @app.route("/index", methods=["GET", "POST"])
-def choose():
+def index():
     krx_list = db.session.query(KrxList).all()
     symbols = {}
     for row in krx_list[1:]:
         symbols[row.code] = row.name
 
-    if request.method == "GET":
-        return render_template("index.html", mydict = symbols)
+    if request.method == "POST":
+        search_term = request.form.get("search")
+        results = search_data(search_term, symbols)
+    else:
+        results = symbols
+    return render_template("index.html", mydict = results)
 
 @app.route("/dashboard")
 def dashboard():
