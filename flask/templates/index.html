@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+
+    </style>
 </head>
 <body>
     <head>
@@ -14,16 +17,28 @@
 
     <main>
         <div>
-            <form method="POST">
-                <input type="text" name="search" placeholder="Search items" />
-                <button type="submit">Search</button>
-            </form>
+                <form method="POST">
+                    <input type="text" name="search" placeholder="Search items" />
+                    <button type="submit">Search</button>
+                </form>
+                
             <h2>Results</h2>
-            <ul>
-                {% for key, name in mydict.items() %}
-                    <li><a href="/dashboard?company={{key}}">{{ name }}</a></li>
+            <table>
+                <tr>
+                    <th>기업명</th>
+                    <th>거래소</th>
+                    <th>시가총액(원)</th>
+                    <th>주식차트</th>
+                </tr>
+                {% for key, value in mydict.items() %}
+                <tr>
+                    <th>{{ value[0] }}</th>
+                    <th>{{ value[1] }}</th>
+                    <th>{{ value[2] }}</th>
+                    <th><a href="/dashboard?company={{key}}">주식차트</a></th>
+                </tr>
                 {% endfor %}
-            </ul>
+            </table>
         </div>
     </main>
 

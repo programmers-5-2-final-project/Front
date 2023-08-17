@@ -3,9 +3,9 @@ from db_model.postgres import *
 
 def search_data(search_term, symbols):
     results = {}
-    for symbol, name in symbols.items():
-        if search_term.lower() in name.lower():
-            results[symbol] = name
+    for symbol, value in symbols.items():
+        if search_term.lower() in value[0].lower():
+            results[symbol] = value
     
     return results
 
@@ -14,7 +14,7 @@ def index():
     krx_list = db.session.query(KrxList).all()
     symbols = {}
     for row in krx_list[1:]:
-        symbols[row.code] = row.name
+        symbols[row.code] = [row.name, row.market, row.marcap]
 
     if request.method == "POST":
         search_term = request.form.get("search")

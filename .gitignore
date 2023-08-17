@@ -2,3 +2,4 @@
 flask/.flaskenv
 test/
 flask/db_model/__pycache__/
+superset/
