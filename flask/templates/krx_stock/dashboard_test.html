@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link href="../../static/style.css" rel="stylesheet" type="text/css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+<body class="bg-success">
+    <div class="col-8 offset-2 my-5">
+        <div class="card">
+            <div class="card-body">
+                <h3>{{ symbol }} 가격 대시보드</h3>
+                <hr>
+                <canvas id="myChart" width="600" height="400"></canvas>
+                
+                
+            </div>  
+        </div> 
+    </div>
+    
+    
+    <script>
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const dates = {{ dates|safe }};
+        const values = {{ values|safe }};
+
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: dates,
+                datasets: [{
+                    label: '# of Votes',
+                    data: values,
+                    borderWidth: 1,
+                    pointRadius: 0,
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                    beginAtZero: true
+                    }
+                }
+            }
+        });
+    var abc = chart.data.datasets[0].label;
+    console.log(abc);
+
+    </script>
+</body>
+</html> 

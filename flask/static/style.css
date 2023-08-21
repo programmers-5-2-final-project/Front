@@ -1,0 +1,113 @@
+@font-face {
+    font-family: 'ELAND_Choice_M';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/ELAND_Choice_M.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+
+h1 {
+    font-family: 'ELAND_Choice_M', sans-serif; color : #3F3A37;
+    text-align: center; /* 전체 본문 가운데 정렬 */
+    margin-top: 50px; /* h1 상단 여백 */
+}
+
+h3 {
+    font-family: 'ELAND_Choice_M', sans-serif; color : #3F3A37;
+    text-align: center; /* 전체 본문 가운데 정렬 */
+    margin-top: 20px; /* h1 상단 여백 */
+}
+
+body {
+    text-align: center; /* 전체 본문 가운데 정렬 */
+}
+
+
+thead {
+    background-color: #f1f1f1;
+    font-family: 'NanumSquare', sans-serif;
+    font-weight: bold;
+}
+
+/* tbody 스타일 */
+tbody {
+    background-color: #ffffff;
+    font-family: 'NanumSquare', sans-serif;
+}
+
+form {
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%; /* 변경된 부분 */
+    /* max-width: 300px; /* 추가된 부분 */
+    margin: 5 auto;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    font-family: 'NanumSquare', sans-serif; 
+    color : #3F3A37;
+    text-align: center; /* 전체 본문 가운데 정렬 */
+    margin-top: 10px; 
+}
+
+select, input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+input[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+canvas {
+    width: auto !important;
+    height: fit-content !important;
+    max-width: 100%;
+    min-height: 100%;
+    max-height: 100vh;
+    box-sizing: border-box !important;
+    margin: auto;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Carter+One&display=swap');
+
+a, u {
+    text-decoration: none;
+    color:#FFf;
+}
+
+p {
+    word-break: keep-all;
+    word-wrap: break-word;
+    color: #eaeaea;
+    font-size: 0.875rem;
+    text-align: left;
+    line-height: 1.2rem;
+}
+
+.spacer {
+    height: 20px; /* 원하는 여백의 높이 */
+}
+
+.large_spacer {
+    height: 60px; /* 원하는 여백의 높이 */
+}
