@@ -28,5 +28,5 @@ jobs:
         fuser -k 5000/tcp;
         nohup python3 dashboard.py > output.log 2>&1 & \
         sleep 10; \
-        curl http://127.0.0.1:5000"
+        curl http://127.0.0.1:5000/index"
         rm -f private_key.pem
