@@ -28,5 +28,5 @@ jobs:
         pkill -f 'python dashboard.py'; \
         nohup python dashboard.py & \
         sleep 10; \
-        curl http:127.0.0.1:5000"
+        curl http://127.0.0.1:5000"
         rm -f private_key.pem
