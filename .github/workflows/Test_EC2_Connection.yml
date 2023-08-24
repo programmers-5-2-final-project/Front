@@ -26,7 +26,7 @@ jobs:
         ssh -o StrictHostKeyChecking=no -i private_key.pem $USER@$HOST "\
         cd /home/ubuntu/Front/flask; \
         fuser -k 5000/tcp;
-        nohup python dashboard.py & \
+        python dashboard.py & \
         sleep 10; \
         curl http://127.0.0.1:5000"
         rm -f private_key.pem
