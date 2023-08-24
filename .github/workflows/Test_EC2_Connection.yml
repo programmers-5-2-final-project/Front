@@ -23,5 +23,10 @@ jobs:
       run: |
         echo "$PRIVATE_KEY" > private_key.pem
         chmod 600 private_key.pem
-        ssh -o StrictHostKeyChecking=no -i private_key.pem $USER@$HOST "ls -tl"
+        ssh -o StrictHostKeyChecking=no -i private_key.pem $USER@$HOST "\
+        cd /home/ubuntu/Front/flask; \
+        pkill -f 'python dashboard.py'; \
+        nohup python dashboard.py &; \
+        sleep 10; \
+        curl http:127.0.0.1:5000"
         rm -f private_key.pem
