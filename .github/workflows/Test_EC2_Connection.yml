@@ -25,7 +25,8 @@ jobs:
         chmod 600 private_key.pem
         ssh -o StrictHostKeyChecking=no -i private_key.pem $USER@$HOST "\
         cd /home/ubuntu/Front/flask; \
-        fuser -k 5000/tcp;
+        fuser -k 5000/tcp; \
+        source env/bin/activate; \
         nohup python3 dashboard.py > output.log 2>&1 & \
         sleep 10; \
         curl http://127.0.0.1:5000/index"
