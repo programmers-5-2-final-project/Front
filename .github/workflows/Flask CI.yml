@@ -1,0 +1,28 @@
+name: Flask CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flask
+
+    - name: Run Flask Tests
+      run: |
+        # 현재는 테스트 코드가 없으므로, Flask 앱이 제대로 실행되는지만 확인합니다.
+        python app.py &
+        sleep 10
+        curl http://127.0.0.1:5000/
