@@ -7,10 +7,14 @@ on:
       - feature/jongwook
       
 jobs:
-  test-connection:
+  test-ec2-connection:
     runs-on: ubuntu-latest
 
     steps:
+    - name: "context"
+      env:
+        COMMIT_ID: ${{ github.sha }}
+      run: echo "Commit id => $COMMIT_ID"
     - name: Execute ls -tl on EC2
       env:
         PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
