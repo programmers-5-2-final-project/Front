@@ -23,7 +23,15 @@ jobs:
         python -m pip install --upgrade pip
         pip install flask
         pip install -r requirements.txt
-
+        
+    - name: Set up environment
+      env:
+        POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+        POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+        POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+        POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+        POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
+       
     - name: Run Flask Tests
       run: |
         cd flask;
