@@ -13,9 +13,9 @@
 </head>
 <body style="background-color: #BEC3CB;">
     <div class="col-8 offset-2 my-5">
-        <div class="card">
+        <div class="card">  
             <div class="card-body">
-                <h3>{{ symbol }} 가격 대시보드</h3>
+                <h3>{{market}} {{ company_name }} ({{ symbol }}) 가격 대시보드</h3>
                 <hr>
                 <canvas id="myChart" width="600" height="400"></canvas>
                 
@@ -29,6 +29,8 @@
         const ctx = document.getElementById('myChart').getContext('2d');
         const dates = {{ dates|safe }};
         const values = {{ values|safe }};
+        
+        
 
 
         new Chart(ctx, {
@@ -36,7 +38,7 @@
             data: {
                 labels: dates,
                 datasets: [{
-                    label: '# of Votes',
+                    label: '가격',
                     data: values,
                     borderWidth: 1,
                     pointRadius: 0,

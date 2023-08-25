@@ -1,6 +1,7 @@
 import psycopg2
 from dotenv import dotenv_values
-from flask_sqlalchemy import SQLAlchemy
+
+# from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
 import re
 
@@ -16,6 +17,7 @@ connection_uri = "postgresql://{}:{}@{}:{}/postgres".format(
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = connection_uri
 # db = SQLAlchemy(app)
+
 
 def conn_postgres():
     # 커서 생성

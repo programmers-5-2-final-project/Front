@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="../static/styles.css" rel="stylesheet" type="text/css">
+    <script src="../static/home.js"></script>
+    <script src="../static/kospi_search.js"></script>
+    <script>
+        const kospi_simbol_company_dict = {{ kospi_simbol_company_dict | tojson | safe }};
+
+        // 각 버튼을 클릭했을 때 해당 섹션으로 스크롤되는 함수
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            section.scrollIntoView({ behavior: "smooth" });
+        }
+
+        // 버튼을 클릭했을 때 지정된 높이 (vh 단위)로 스크롤되는 함수
+        function scrollToVH(vh) {
+            const windowHeight = window.innerHeight;
+            const scrollToHeight = windowHeight * (vh / 100);
+            window.scrollTo({
+                top: scrollToHeight,
+                behavior: "smooth"
+            });
+        }
+    </script>
+    
+    <title>Stock Dashboard Home</title>
+    <!--kospi_simbol_company_dict : {코스피 종목코드 : 회사 이름} -->
+</head>
+
+<body>
+<!-- 1p -->
+<div>   
+    <!-- 상단 바 -->
+    <div class="navbar">
+        <div class="logo">
+            <a href="#">로고 자리</a>
+        </div>
+        <ul class="ml-auto nav ">   
+            <li><button class="nav-link btn btn-transparent bar-button" onclick="scrollToSection('home')" href="#">Home</a></li>
+            <li><button class="nav-link btn btn-transparent bar-button" onclick="scrollToVH(100)"  href="#">코스피</a></li>
+            <li><button class="nav-link btn btn-transparent bar-button" onclick="scrollToVH(202)"  href="#">나스닥</a></li>
+            <li><button class="nav-link btn btn-transparent bar-button" onclick="scrollToVH(302)"  href="#">S&P</a></li>
+            <li><button class="nav-link btn btn-transparent bar-button" onclick="scrollToVH(402)"  href="#">원자재</a></li>
+        </ul>
+    </div>
+
+
+
+    <div id="home" style="height: 9vh;"></div>
+
+    <div class="sub_card">
+    <h1 class="main_header">주식 분석 대시보드</h1>
+
+    <div class="horizontal index_card">
+        <div class="left">
+        <!-- 왼쪽 내용 -->
+        <h1>Left Content</h1>
+        <p>This is the left content area.</p>
+            
+        <main>
+            <div>
+                
+            </div>
+        </main>
+        </div>
+        <div class="right">
+        <!-- 오른쪽 내용 -->
+        <h1>Right Content</h1>
+        <p>This is the right content area.</p>
+        </div>
+    </div>
+    </div>
+</div>
+    
+<!-- 2p 코스피 -->
+
+<div id="home" style="height: 9vh;"></div>
+<div id="kospi" class="sub_card">
+    <h2>코스피</h2>
+    <div class="horizontal index_card">
+    <div class="left">
+    <!-- 왼쪽 내용 -->
+        <input class="form-control" type="text" id="searchInput" placeholder="종목명을 입력하세요.">
+        <ul id="searchResults"></ul>
+        <script src="../static/kospi_search.js"></script>
+        
+
+        <div class="container mt-5">
+        <form action="/main/detail">
+            <label for="company"></label>
+            <select name="kospi_company" id="kospi_company" class="form-control">
+                {% for key, value in kospi_simbol_company_dict.items() %}
+                    <option value="{{ key }}" 
+                    {% if (key == target) %} selected="selected" {% endif %}
+                    >
+                    {{ value }}
+                    </option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="submit" class="submit-button inline-buttons">
+        </form>
+        </div>
+
+        
+        
+    </div>
+
+
+    <div class="right">
+        <!-- 오른쪽 내용 -->
+        <main>
+        <div>
+            
+
+            
+        </div>
+        </main>
+        
+        
+    </div>
+    </div>
+    
+    
+    </div>
+    </main>
+</div>
+
+<!-- 나스닥 -->
+<div id="home" style="height: 9vh;"></div>
+<div id="nasdaq" class="sub_card pink">
+    <h2>나스닥</h2>
+    <div class="horizontal index_card">
+    <div class="left">
+    <!-- 왼쪽 내용 -->
+        <div class="container mt-5">
+        <form action="/main/detail">
+            <label for="company"></label>
+            <!--<select name="market" id="market" class="form-control">
+                <option value="nasdaq"></option>
+            </select>-->
+            <!-- 드롭다운 -->
+            <input type="hidden" name="market" value="nasdaq">  
+            <select name="symbol" id="symbol" class="form-control">
+                <!-- {symbol : name} -->
+                {% for key, value in nasdaq_simbol_company_dict.items() %}
+                    <option value="{{ key }}" {% if (key == target) %} selected="selected" {% endif %}>
+                        {{ value }}
+                    </option>
+
+                {% endfor %}    
+            </select>
+            
+            
+            <input type="submit" value="submit" class="submit-button inline-buttons">
+
+        </form>
+        </div>
+
+        
+        
+    </div>
+
+
+    <div class="right">
+        <!-- 오른쪽 내용 -->
+        <main>
+        <div>
+            <!--
+            <form method="POST">
+                <input type="text" name="search" placeholder="Search items" />
+                <button type="submit">Search</button>
+            </form>
+            -->
+
+            
+        </div>
+        </main>
+        
+        
+    </div>
+    </div>
+    
+</div>
+
+<div id="home" style="height: 9vh;"></div>
+<div id="snp" class="sub_card">
+    <h2>S&P500</h2>
+    <div class="horizontal index_card">
+    <div class="left">
+    <!-- 왼쪽 내용 -->
+        <div class="container mt-5">
+        <form action="/main/detail">
+            <label for="company"></label>
+            <!--<select name="market" id="market" class="form-control">
+                <option value="nasdaq"></option>
+            </select>-->
+            <!-- 드롭다운 -->
+            <input type="hidden" name="market" value="nasdaq">  
+            <select name="symbol" id="symbol" class="form-control">
+                <!-- {symbol : name} -->
+                {% for key, value in snp_simbol_company_dict.items() %}
+                    <option value="{{ key }}" {% if (key == target) %} selected="selected" {% endif %}>
+                        {{ value }}
+                    </option>
+
+                {% endfor %}    
+            </select>
+            
+            
+            <input type="submit" value="submit" class="submit-button inline-buttons">
+
+        </form>
+        </div>
+
+        
+        
+    </div>
+
+
+    <div class="right">
+        <!-- 오른쪽 내용 -->
+        <main>
+        <div>
+            <!--
+            <form method="POST">
+                <input type="text" name="search" placeholder="Search items" />
+                <button type="submit">Search</button>
+            </form>
+            -->
+
+            
+        </div>
+        </main>
+        
+        
+    </div>
+</div>
+
+<div id="home" style="height: 9vh;"></div>
+<div id="material" class="sub_card">
+    <h2>원자재</h2>
+    <div class="horizontal index_card">
+    <div class="left">
+    <!-- 왼쪽 내용 -->
+        <div class="container mt-5">
+        <form action="/main/detail">
+            <label for="company"></label>
+            <!--<select name="market" id="market" class="form-control">
+                <option value="nasdaq"></option>
+            </select>-->
+            <!-- 드롭다운 -->
+            <input type="hidden" name="market" value="nasdaq">  
+            <select name="symbol" id="symbol" class="form-control">
+                <!-- {symbol : name} -->
+                {% for key, value in material_simbol_company_dict.items() %}
+                    <option value="{{ key }}" {% if (key == target) %} selected="selected" {% endif %}>
+                        {{ value }}
+                    </option>
+
+                {% endfor %}    
+            </select>
+            
+            
+            <input type="submit" value="submit" class="submit-button inline-buttons">
+
+        </form>
+        </div>
+
+        
+        
+    </div>
+
+
+    <div class="right">
+        <!-- 오른쪽 내용 -->
+        <main>
+        <div>
+            <!--
+            <form method="POST">
+                <input type="text" name="search" placeholder="Search items" />
+                <button type="submit">Search</button>
+            </form>
+            -->
+
+            
+        </div>
+        </main>
+        
+        
+    </div>
+</div>
+    
+    
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
