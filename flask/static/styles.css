@@ -9,9 +9,9 @@
 @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
 
 
+
 * {
     font-family: 'NanumSquare', sans-serif;
-
     margin: 0;
     padding: 0;
 
@@ -19,19 +19,28 @@
 
 
 /* html태그 */
-div{
+.default_background {
     background-color : #f2f2f2;
     
 }
 
 h1 {
     font-family: 'ELAND_Choice_M', sans-serif; color : #3F3A37;
+    font-family: 'ELAND_Choice_M', sans-serif; color : #3F3A37;
     text-align: left; /* 전체 본문 가운데 정렬 */
     margin-left: 4vh;
     margin-top: 4vh; /* h1 상단 여백 */
     font-weight: bold;
     font-size: 7vh;
+
 }
+
+h3 {
+    font-family: 'ELAND_Choice_M', sans-serif; color : #3F3A37;
+    text-align: center; /* 전체 본문 가운데 정렬 */
+}
+
+margin-top: 20px; /* h1 상단 여백 */
 
 .main_header {
     font-family: 'ELAND_Choice_M', sans-serif; color : #3F3A37;
@@ -40,6 +49,7 @@ h1 {
     margin-top: 4vh; /* h1 상단 여백 */
     font-weight: bold;
     font-size: 7vh;
+
 }
 
 .detail_header {
@@ -53,6 +63,11 @@ h1 {
 
 
 h2 {
+    font-family: 'ELAND_Choice_M', sans-serif; color : #3F3A37;
+    
+}
+
+.sub-title {
     font-family: 'ELAND_Choice_M', sans-serif; color : #3F3A37;
     text-align: left; /* 전체 본문 가운데 정렬 */
     margin-left: 6vh;
@@ -72,6 +87,24 @@ label {
     margin-top: 10px; 
 }
 
+p {
+    word-break: keep-all;
+    word-wrap: break-word;
+    color: #eaeaea;
+    font-size: 0.875rem;
+    text-align: left;
+    line-height: 1.2rem;
+}
+
+canvas {
+    width: auto !important;
+    height: fit-content !important;
+    max-width: 50%;
+    min-height: 50%;
+    max-height: 150vh;
+    box-sizing: border-box !important;
+    margin: auto;
+}
 
 
 body {
@@ -79,10 +112,11 @@ body {
     padding: 0;
     font-family: Arial, sans-serif;
     background-color: #CCCCCC;
+    text-align: center; /* 전체 본문 가운데 정렬 */
     }
 
 .submit-button {
-    background-color: #007BFF;
+    background-color: #849BA2;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -90,16 +124,81 @@ body {
     cursor: pointer;
     border-radius: 5px;
     transition: background-color 0.3s;
+    margin-left: 2vh;
 }
 
 .submit-button:hover {
-    background-color: #0157b2;
+    background-color: #68828a;
 }
 
 .inline-buttons {
     display: inline-flex;
     gap: 10px; /* 버튼 사이의 간격을 조정하세요 */
     align-items: flex-end; /* 버튼을 아래 정렬합니다 */
+}
+
+.title {
+    display: flex; /* 요소를 가로 방향으로 배치 */
+    justify-content: center; /* 가로 방향으로 가운데 정렬 */
+    align-items: center; /* 세로 방향으로 가운데 정렬 */
+    gap: 20px; /* 요소 사이의 간격 설정 */
+    font-family: 'ELAND_Choice_M', sans-serif; color : #3F3A37;
+    text-align: left; /* 전체 본문 가운데 정렬 */
+    margin-left: 6vh;
+    margin-top: 7vh; /* h1 상단 여백 */
+    font-weight: bold;
+    margin-bottom: 3vh;
+    font-size: 5vh;
+    -webkit-box-orient: horizontal;
+    font-family: 'ELAND_Choice_M', sans-serif; color : #3F3A37;
+    text-align: center; /* 전체 본문 가운데 정렬 */
+}
+
+.title_market{
+    color: rgb(36, 69, 126);
+    font-weight: bold; /* 글꼴 두께 추가 */
+    font-size: 6vh; /* 글꼴 크기 조정 */
+}
+
+.sub_card {
+    height: 91vh;
+    padding-top: 0.1vh;
+    margin-top: 0vh;
+    /* background-color: #ACB7C0; */
+    transition: background-color 0.7s;
+    
+
+}
+
+
+
+
+.box {
+    background-color: #5d83bf60;
+    color: #474747;
+    transition: background-color 0.5s;
+    border-radius: 8px;
+    text-align: center; /* 전체 본문 가운데 정렬 */
+    padding: 1vh; 
+
+}
+
+/* 상위 20 목록 */
+.scrollable-list {
+    height: 400px; /* 원하는 높이로 조절하세요 */
+    overflow-y: scroll;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.stock-list {
+    list-style: none;
+    padding: 0;
+}
+
+.stock-list li {
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
 }
 
 
@@ -121,14 +220,9 @@ body {
 
 .index_card {
     height: 77vh;
+    background-color: #F5F5F5;
 }
 
-.sub_card {
-    height: 91vh;
-    padding-top: 0.1vh;
-    margin-top: 0vh;
-
-}
 
 .pink {
     background-color: pink;
@@ -136,20 +230,20 @@ body {
 
 .left {
     flex: 1; /* 남은 영역을 왼쪽에 할당 */
-    background-color: #9d9d9d;
+    /* background-color: #9d9d9d; */
     padding: 20px;
 }
 
 .right {
     flex: 1; /* 남은 영역을 오른쪽에 할당 */
-    background-color: #e0e0e0;
+    /* background-color: #e0e0e0; */
     padding: 20px;
 }
 
 .navbar {
     /* background-color: #CCCCCC; */
-    background-color: #eccbdfb6;
-    color: #333333;
+    background-color: #ACB7C0;
+    color: #474747;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -182,7 +276,7 @@ body {
 
 .navbar a {
     text-decoration: none;
-    color: #333333;
+    color: #474747;
     border: 2px;
     border-radius: 10px;
     padding: 8px 12px;
@@ -195,18 +289,47 @@ body {
 
 .bar-button {
     background-color: rgba(0, , , 0);;
-    color: #333333;
+    color: #474747;
     border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
+    /* padding: 1vh 2vh; */
+    padding: 1vh 2vh;
+    font-size: 2.5vh;
+    border-radius: 8px;
+    font-weight: bold;
+    margin: 0;
+    /* margin: 1vh */
+    /* cursor: pointer; */
+
 }
 
 .bar-button:hover {
-    background-color: #0056b3;
+    background-color: #849BA2;
+    transition: background-color 0.5s;  
 }
 
 
+.superset-button {
+    background-color: #E6D6C7;
+    color: #474747;
+    border: none;
+    padding: 1vh 1vh;
+    font-size: 2.5vh;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.5s;
+    display: flex;
+    margin: 0;
+    padding: 4;
+    margin-top: 7vh; /* 위 여백 조정 */
+    margin-left: 60vh;
+    margin-bottom: 4vh;
+}
+
+
+.superset-button:hover {
+    background-color: #dfba98;
+}
 
 
 /* text */

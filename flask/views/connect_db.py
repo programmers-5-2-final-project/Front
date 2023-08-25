@@ -13,9 +13,60 @@
 - conn_db_get_json_data
     - table 명 적으면 select 문으로 조회해서, 
     컬럼명, josn_data 형식으로 가져오는 함수 
+    
+- get_top_level_list(criteria, market)
 
 
 """
+
+# 쿼리 파일 로드
+with open("./models/queries.sql", "r") as file:
+    """
+    -- 쿼리 0: krx 상위 시가총액 불러오기
+    -- 쿼리 1: nasdaq, snp 상위 시가총액 불러오기
+    -- 쿼리 2: krx 상위 등락율 불러오기
+    """
+    sql_queries = file.read()
+
+
+def get_variables():
+    return
+
+
+# 쿼리 실행 예시
+def get_top_level_list(criteria, market):
+    """
+    상위 리스트 가져오기
+    - criteria
+    1) 시가총액 market_capitalization
+    2) 등락률 fluctuation_rate
+
+    - market
+    1) kospi
+
+    """
+
+    if criteria == "market_capitalization":
+        if market == "kospi":
+            return conn_db_get_json_data(sql_queries.split(";")[0])
+
+    elif criteria == "fluctuation_rate":
+        if market == "kospi":
+            return conn_db_get_json_data(sql_queries.split(";")[2])
+    else:
+        return {}
+
+
+# 쿼리 실행 예시
+def get_all_users():
+    return db.engine.execute(sql_queries.split(";")[0])  # 첫 번째 쿼리 실행
+
+
+def get_user_by_id(user_id):
+    return db.engine.execute(sql_queries.split(";")[1], user_id=user_id)  # 두 번째 쿼리 실행
+
+
+# 나머지 쿼리들도 마찬가지 방식으로 사용 가능
 
 
 def get_market_individual_data(market, symbol):
@@ -27,13 +78,21 @@ def get_market_individual_data(market, symbol):
     """
 
     if market == "kospi":
-        column_names, json_data = conn_db_get_json_data(f"analytics.krx_stock_{symbol}")
+        column_names, json_data = conn_db_get_json_data(
+            f"select * from analytics.krx_stock_{symbol};"
+        )
     elif market == "nasdaq":
-        column_names, json_data = conn_db_get_json_data(f"analytics.nas_stock_{symbol}")
+        column_names, json_data = conn_db_get_json_data(
+            f"select * from analytics.nas_stock_{symbol};"
+        )
     elif market == "snp":
-        column_names, json_data = conn_db_get_json_data(f"analytics.snp_stock_{symbol}")
+        column_names, json_data = conn_db_get_json_data(
+            f"select * from analytics.snp_stock_{symbol};"
+        )
     elif market == "material":
-        column_names, json_data = conn_db_get_json_data(f"row_data.{symbol}")
+        column_names, json_data = conn_db_get_json_data(
+            f"select * from raw_data.{symbol};"
+        )
     else:
         return None  # 처리하지 않는 시장에 대한 처리
 
@@ -54,7 +113,9 @@ def get_simbol_company_list_dict(market):
 
     if market == "kospi":
         label = "krx_list"
-        column_names, json_data = conn_db_get_json_data(f"raw_data.{label}")
+        column_names, json_data = conn_db_get_json_data(
+            f"select * from raw_data.{label};"
+        )
 
         symbols = {}
         for row in json_data:
@@ -65,7 +126,9 @@ def get_simbol_company_list_dict(market):
 
     elif market == "nasdaq":
         label = "nas_list"
-        column_names, json_data = conn_db_get_json_data(f"raw_data.{label}")
+        column_names, json_data = conn_db_get_json_data(
+            f"select * from raw_data.{label};"
+        )
 
         symbols = {}
         for row in json_data:
@@ -93,43 +156,8 @@ def get_simbol_company_list_dict(market):
         return None  # 처리하지 않는 시장에 대한 처리
 
 
-## 회사 정보 가지고 오는 함수도 만들기
-
-
-def get_kospi_data(symbol):
-    """코스피 종목 코드 입력하면
-        1) 컬럼 리스트,
-        2) 가격 데이터 (json형식) 가져오기
-
-    input:
-        simbol (str): 종목 코드 입력
-    output: column_names, json_data
-
-    """
-    column_names, json_data = conn_test_db_get_json_data(
-        f"analytics.krx_stock_{symbol}"
-    )
-
-    return column_names, json_data
-
-
-def get_nasdaq_data(symbol):
-    # 나스닥 시장의 회사 데이터 가져오는 코드
-    pass
-
-
-def get_snp_data(symbol):
-    # S&P 시장의 회사 데이터 가져오는 코드
-    pass
-
-
-def get_material_data(symbol):
-    # 원자재 시장의 회사 데이터 가져오는 코드
-    pass
-
-
 ### db 연결 함수
-def conn_db_get_json_data(table):
+def conn_db_get_json_data(query):
     """rds 접속해서 de-5-2-db
     컬럼 리스트, 데이터 (json형식) 가져오기
 
@@ -162,7 +190,7 @@ def conn_db_get_json_data(table):
     cursor = conn.cursor()
 
     # 쿼리 실행 및 데이터 가져오기
-    query = f"SELECT * FROM {table}"
+
     cursor.execute(query)
     data = cursor.fetchall()
 
@@ -182,7 +210,7 @@ def conn_db_get_json_data(table):
     return column_names, json_data
 
 
-def conn_test_db_get_json_data(table):
+def conn_test_db_get_json_data(query):
     """rds 접속해서 -> de-5-2에 analytics스키마에 현재 있는 상황
     1) 컬럼 리스트,
     2) 데이터 (json형식) 가져오기
@@ -217,7 +245,7 @@ def conn_test_db_get_json_data(table):
     cursor = conn.cursor()
 
     # 쿼리 실행 및 데이터 가져오기
-    query = f"SELECT * FROM {table};"
+
     print(query)
     cursor.execute(query)
     data = cursor.fetchall()

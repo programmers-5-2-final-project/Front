@@ -6,16 +6,38 @@
     <meta name="theme-color" content="#BEC3CB" />
     <title>dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-    <link href="../../static/style.css" rel="stylesheet" type="text/css">
+    <link href="../../static/styles.css" rel="stylesheet" type="text/css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
 <body style="background-color: #BEC3CB;">
-    <div class="col-8 offset-2 my-5">
+    <!-- 상단 바 -->
+    <div class="navbar">
+        <div class="logo">
+            <a href="http://127.0.0.1:5000/main/home">로고 자리</a>
+        </div>
+        <ul class="ml-auto nav ">   
+            <li><button class="nav-link btn btn-transparent bar-button"> <a href="http://127.0.0.1:5000/main/home#home">Home</a></li>
+            <li><button class="nav-link btn btn-transparent bar-button"> <a href="http://127.0.0.1:5000/main/home#kospi">코스피</a></li>
+            <li><button class="nav-link btn btn-transparent bar-button"> <a href="http://127.0.0.1:5000/main/home#nasdaq">나스닥</a></li>
+            <li><button class="nav-link btn btn-transparent bar-button"> <a href="http://127.0.0.1:5000/main/home#snp">S&P</a></li>
+            <li><button class="nav-link btn btn-transparent bar-button"> <a href="http://127.0.0.1:5000/main/home#material">원자재</a></li>
+        </ul>
+    </div>
+    <!-- 상단바 자리 -->
+    <div style="height: 9vh;"></div>
+
+    <div class="col-8 offset-2 my-4">
         <div class="card">  
             <div class="card-body">
-                <h3>{{market}} {{ company_name }} ({{ symbol }}) 가격 대시보드</h3>
+                <div class="title">
+                    <h3 class="title_market">{{market}}</h3> 
+                    <h3 class="box"> 
+                    {{ company_name }} ({{ symbol }}) 
+                    </h3>
+                    <h3>가격 대시보드</h3>
+                </div>
                 <hr>
                 <canvas id="myChart" width="600" height="400"></canvas>
                 

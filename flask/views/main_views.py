@@ -16,14 +16,23 @@ def index():
 
 @bp.route("/home", methods=["GET", "POST"])
 def home():
-    # 종목 목록 가져오기
+    # 1. 종목 목록 가져오기 -> 검색 구현
     # 1) 코스피, 2) 나스닥, 3) snp, 4) 원자재
-    from .connect_db import get_simbol_company_list_dict
+    from .connect_db import get_simbol_company_list_dict, get_top_level_list
 
     kospi_simbol_company_dict = get_simbol_company_list_dict("kospi")
     nasdaq_simbol_company_dict = get_simbol_company_list_dict("nasdaq")
     snp_simbol_company_dict = get_simbol_company_list_dict("snp")
     material_simbol_company_dict = get_simbol_company_list_dict("material")
+
+    # 2. 상위 리스트 구현 column_names, json_data
+    # 1) market_capitalization 시가총액 상위 20
+    _, kospi_top_market_capitalization_dict = get_top_level_list(
+        "market_capitalization", "kospi"
+    )
+
+    # 2) fluctuation_rate 등락율 상위 20
+    _, kospi_top_fluctuation_rate_dict = get_top_level_list("fluctuation_rate", "kospi")
 
     if request.method == "GET":
         return render_template("home.html", **locals())  # html에 잘 넘겨줘야함
@@ -42,17 +51,16 @@ def detail():
     market = request.args.get("market", "")
     symbol = request.args.get("symbol", "")
 
-    # symbol에 해당하는 종목의 상세 정보 가져오는 로직 추가
-    from .connect_db import get_market_individual_data
+    from .connect_db import get_market_individual_data, get_simbol_company_list_dict
 
-    _, individual_stock_json_data = get_market_individual_data("nasdaq", symbol)
+    symbols = get_simbol_company_list_dict(market)
+    company_name = symbols[symbol]
+    _, individual_stock_json_data = get_market_individual_data(market, symbol)
 
     if market in ["kospi", "nasdaq", "snp"]:
         dates = []
         values = []
 
-        # 회사이름 가져오기 추가
-        company_name = "____"
         for row in individual_stock_json_data:
             # 날짜 리스트
             dates.append(
@@ -66,25 +74,28 @@ def detail():
             )
             # 종가 리스트
             values.append(row["close"])
-    else:
+    else:  # 원자재
         dates = []
         values = []
 
-        # 회사이름 가져오기 추가
-        company_name = "____"
+        from datetime import datetime
+
         for row in individual_stock_json_data:
             # 날짜 리스트
+
+            datetime_obj = row["date"]
+            # datetime_obj = datetime.strptime(row["date"], "%Y-%m-%d")
             dates.append(
                 "-".join(
                     [
-                        str(row["date"].year),
-                        str(row["date"].month),
-                        str(row["date"].day),
+                        str(datetime_obj.year),
+                        str(datetime_obj.month),
+                        str(datetime_obj.day),
                     ]
                 )
             )
             # 종가 리스트
-            values.append(int(row["usd_pm"]))
+            values.append(row["usd_pm"])
 
     # 이후 render_template을 사용하여 상세 정보를 템플릿에 전달하여 표시
     return render_template("detail.html", **locals())

@@ -1,11 +1,9 @@
 from flask import Flask, render_template, redirect, url_for, request, Response, jsonify
-from db_model.postgres import *
 from views import main_views
 
 
 from dotenv import dotenv_values
 import psycopg2, psycopg2.extras
-from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
 import re
 

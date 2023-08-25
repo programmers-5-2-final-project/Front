@@ -121,6 +121,116 @@ canvas {
 
 /*util class*/
 
+.title {
+    display: flex; /* 요소를 가로 방향으로 배치 */
+    justify-content: center; /* 가로 방향으로 가운데 정렬 */
+    align-items: center; /* 세로 방향으로 가운데 정렬 */
+    gap: 20px; /* 요소 사이의 간격 설정 */
+    font-family: 'ELAND_Choice_M', sans-serif; color : #3F3A37;
+    text-align: left; /* 전체 본문 가운데 정렬 */
+    margin-left: 6vh;
+    margin-top: 7vh; /* h1 상단 여백 */
+    font-weight: bold;
+    margin-bottom: 3vh;
+    font-size: 5vh;
+    -webkit-box-orient: horizontal;
+}
+
+.title_market{
+    color: rgb(36, 69, 126);
+    font-weight: bold; /* 글꼴 두께 추가 */
+    font-size: 6vh; /* 글꼴 크기 조정 */
+}
+
+.box {
+    background-color: #5d83bf60;
+    color: #333333;
+    transition: background-color 0.5s;
+    border-radius: 8px;
+    text-align: center; /* 전체 본문 가운데 정렬 */
+    padding: 1vh; 
+
+}
+
+.navbar {
+    /* background-color: #CCCCCC; */
+    background-color: #eccbdfb6;
+    color: #333333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 9vh;
+    /* padding: 4px 20px; */
+    /* position: fixed; */
+    position: fixed; /* 상단 바를 고정시킴 */
+    width: 100%; /* 너비를 화면 너비에 맞춤 */
+    top: 0; /* 화면 상단에 위치시킴 */
+    left: 0; /* 화면 좌측에 위치시킴 */
+    z-index: 1000; /* 다른 요소 위에 레이어를 설정 */
+}
+
+.logo {
+    width: 30vh;
+    height: auto;
+    margin-right: 10px;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar li {
+    margin-right: 20px;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #333333;
+    border: 2px;
+    border-radius: 10px;
+    padding: 8px 12px;
+    transition: background-color 0.3s;
+}
+
+.navbar a:hover {
+    color: #FF5F15;
+}
+
+.bar-button {
+    background-color: rgba(0, , , 0);;
+    color: #333333;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.bar-button:hover {
+    background-color: #0056b3;
+}
+
+
+.superset-button {
+    background-color: #FFA500;
+    color: #333333;
+    border: none;
+    padding: 1vh 1vh;
+    font-size: 2.5vh;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.5s;
+    display: flex;
+    margin: 0;
+    padding: 4;
+    margin-top: 7vh; /* 위 여백 조정 */
+    margin-left: 60vh;
+    margin-bottom: 4vh;
+}
+
 .spacer {
     height: 20px; /* 원하는 여백의 높이 */
 }
