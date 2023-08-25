@@ -1,5 +1,6 @@
 .venv/
 flask/.flaskenv
+flask/.env
 test/
 flask/db_model/__pycache__/
 superset/
