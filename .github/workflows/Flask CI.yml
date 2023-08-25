@@ -17,8 +17,7 @@ jobs:
 
     - name: run ls -tl
       run: ls -tl
-    - name: run follow directory
-      run: cd Front
+      
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
