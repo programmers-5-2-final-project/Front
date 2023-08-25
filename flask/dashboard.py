@@ -43,4 +43,4 @@ if __name__ == '__main__':
         classes = create_table_models()
         for k, v in classes.items():
             globals()[k] = v
-        app.run(host="0.0.0.0", port="8082",debug=True)
+        app.run(host="0.0.0.0", port="5000",debug=True)
