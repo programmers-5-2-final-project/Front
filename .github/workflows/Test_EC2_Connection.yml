@@ -27,7 +27,7 @@ jobs:
         cd /home/ubuntu/Front/flask; \
         fuser -k 5000/tcp; \
         source env/bin/activate; \
-        nohup python3 dashboard.py > output.log 2>&1 & \
+        nohup python3 app.py > output.log 2>&1 & \
         sleep 10; \
-        curl http://127.0.0.1:5000/index"
+        curl http://127.0.0.1:5000"
         rm -f private_key.pem
