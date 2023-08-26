@@ -1,4 +1,4 @@
-name: Test EC2 Connection
+name: git pull on EC2
 
 on:
   push:
@@ -15,7 +15,7 @@ jobs:
       env:
         COMMIT_ID: ${{ github.sha }}
       run: echo "Commit id => $COMMIT_ID"
-    - name: Execute ls -tl on EC2
+    - name: Execute g on EC2
       env:
         PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
         HOST: ${{ secrets.EC2_HOST }}
