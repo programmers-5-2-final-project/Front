@@ -30,12 +30,26 @@ def home():
     _, kospi_top_market_capitalization_dict = get_top_level_list(
         "market_capitalization", "kospi"
     )
+    _, nasdaq_top_market_capitalization_dict = get_top_level_list(
+        "market_capitalization", "nasdaq"
+    )
+    _, snp_top_market_capitalization_dict = get_top_level_list(
+        "market_capitalization", "snp"
+    )
 
     # 2) fluctuation_rate 등락율 상위 20
     _, kospi_top_fluctuation_rate_dict = get_top_level_list("fluctuation_rate", "kospi")
+    _, nasdaq_top_fluctuation_rate_dict = get_top_level_list(
+        "market_capitalization", "nasdaq"
+    )
+    _, snp_top_fluctuation_rate_dict = get_top_level_list(
+        "market_capitalization", "snp"
+    )
 
     if request.method == "GET":
         return render_template("home.html", **locals())  # html에 잘 넘겨줘야함
+
+    return render_template("home.html", **locals())
 
 
 @bp.route("/detail_test")

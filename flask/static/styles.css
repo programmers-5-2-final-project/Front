@@ -183,18 +183,65 @@ body {
 
 }
 
+
 /* 상위 20 목록 */
+.top-list-header {
+    text-align: center;
+    font-size: 3.5vh;
+    font-weight: bold;
+    margin-left: 4vh;
+    
+}
+
 .scrollable-list {
     height: 400px; /* 원하는 높이로 조절하세요 */
     overflow-y: scroll;
-    border: 1px solid #ccc;
+    /* border: 1px solid #ccc; */
     padding: 10px;
+    width: 100%;
+    overflow-x: auto;
 }
 
 .stock-list {
     list-style: none;
     padding: 0;
+    width: 100%;
+    border-collapse: collapse;
 }
+
+/* .stock-list th{
+    border: 1px solid #dddddd;
+    padding: 1vh;
+    text-align: center;
+} */
+
+.stock-list td{
+    /* border: 1px solid #dddddd; */
+    padding: 1vh;
+    text-align: center;
+
+}
+
+.td_name{
+    text-align: left;
+}
+
+.td_price{
+    text-align: right;
+}
+
+.td_ratio{
+    text-align: right;
+}
+
+
+
+
+.stock-list th {
+    background-color: #f2f2f2;
+    
+}
+
 
 .stock-list li {
     padding: 8px;

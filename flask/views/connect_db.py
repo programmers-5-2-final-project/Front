@@ -49,12 +49,28 @@ def get_top_level_list(criteria, market):
     if criteria == "market_capitalization":
         if market == "kospi":
             return conn_db_get_json_data(sql_queries.split(";")[0])
+        elif market == "nasdaq":
+            return conn_db_get_json_data(sql_queries.split(";")[1])
+        elif market == "snp":
+            return conn_db_get_json_data(sql_queries.split(";")[2])
+        elif market == "material":
+            return {"rank": "", "name": "", "code": "", "price": "", "changesratio": ""}
+        else:
+            return {"rank": "", "name": "", "code": "", "price": "", "changesratio": ""}
 
     elif criteria == "fluctuation_rate":
         if market == "kospi":
-            return conn_db_get_json_data(sql_queries.split(";")[2])
+            return conn_db_get_json_data(sql_queries.split(";")[3])
+        elif market == "nasdaq":
+            return conn_db_get_json_data(sql_queries.split(";")[4])
+        elif market == "snp":
+            return conn_db_get_json_data(sql_queries.split(";")[5])
+        elif market == "material":
+            return {"rank": "", "name": "", "code": "", "price": "", "changesratio": ""}
+        else:
+            return {"rank": "", "name": "", "code": "", "price": "", "changesratio": ""}
     else:
-        return {}
+        return {"rank": "", "name": "", "code": "", "price": "", "changesratio": ""}
 
 
 # 쿼리 실행 예시
@@ -125,7 +141,7 @@ def get_simbol_company_list_dict(market):
         return symbols
 
     elif market == "nasdaq":
-        label = "nas_list"
+        label = "nas_co_info"
         column_names, json_data = conn_db_get_json_data(
             f"select * from raw_data.{label};"
         )
@@ -137,17 +153,18 @@ def get_simbol_company_list_dict(market):
 
         return symbols
     elif market == "snp":
-        label = "snp_stock_list"
+        label = "snp_co_info"
 
-        # column_names, json_data = conn_db_get_json_data(f"raw_data.{label}")
+        column_names, json_data = conn_db_get_json_data(
+            f"select * from raw_data.{label};"
+        )
 
-        # symbols = {}
-        # for row in json_data:
-        #     symbols[row["symbol"].lower()] = row["name"]
-        # # {000140 : '회사이름'}
+        symbols = {}
+        for row in json_data:
+            symbols[row["symbol"].lower()] = row["name"]
+        # {000140 : '회사이름'}
 
-        return {}
-        # return symbols
+        return symbols
 
     elif market == "material":
         return {"gold": "금", "silver": "은", "cme": "구리", "orb": "원유"}

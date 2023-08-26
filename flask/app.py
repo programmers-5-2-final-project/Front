@@ -1,11 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, request, Response, jsonify
 from views import main_views
 
-
 from dotenv import dotenv_values
-import psycopg2, psycopg2.extras
-from sqlalchemy import text
-import re
 
 
 app = Flask(__name__, static_url_path="/static")
@@ -13,47 +9,19 @@ app = Flask(__name__, static_url_path="/static")
 
 ## 블루 프린트 사용
 # 블루 프린트 등록
-from views import main_views, kospi_stock, kospi_stock_copy
 from views import main_views
+
 
 # main_views에서 생성한 객체 등록
 app.register_blueprint(main_views.bp)
-app.register_blueprint(kospi_stock.bp_krx)
-app.register_blueprint(kospi_stock_copy.bp_kospi)
 
 
 if __name__ == "__main__":
     with app.app_context():
-        # classes = create_table_models()
-        # for k, v in classes.items():
-        #     globals()[k] = v
         app.run(host="127.0.0.1", port="5000", debug=True)
 
 
-# CONFIG = dotenv_values(".flaskenv")
-# db_config = {
-#     "dbname": "dev",
-#     "user": CONFIG["POSTGRES_USER"],
-#     "password": CONFIG["POSTGRES_PASSWORD"],
-#     "host": CONFIG["POSTGRES_HOST"],
-#     "port": CONFIG["POSTGRES_PORT"],
-# }
-# connection_uri = "postgresql+psycopg2://{}:{}@{}:{}/{}".format(
-#     db_config["user"],
-#     db_config["password"],
-#     db_config["host"],
-#     db_config["port"],
-#     db_config["dbname"],
-# )
-
-
-# app.config["SQLALCHEMY_DATABASE_URI"] = connection_uri
-# db = SQLAlchemy(app)
-
-
-# app.register_blueprint(main_views.dashbord_abtest, url_prefix='/dashbord')
-# 앱에서 블루프린트에 정의된 /라우트와 뷰 함수를 사용할 수 있음
-# blog_view 밑의 blog_abtest의 모든 라우트 -> /blog
+# 좀 있다 다 지우기
 
 
 def conn_db_get_json(table):

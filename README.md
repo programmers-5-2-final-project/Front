@@ -13,6 +13,13 @@
 ## 시작 가이드
 ---
 ### Flask
+.flaskenv > flask 폴더 안에 구성
+POSTGRES_USER
+POSTGRES_PASSWORD
+POSTGRES_HOST
+POSTGRES_PORT
+
+
 실행
 '''
 python3 flask/app.py
