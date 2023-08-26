@@ -40,10 +40,10 @@ def home():
     # 2) fluctuation_rate 등락율 상위 20
     _, kospi_top_fluctuation_rate_dict = get_top_level_list("fluctuation_rate", "kospi")
     _, nasdaq_top_fluctuation_rate_dict = get_top_level_list(
-        "market_capitalization", "nasdaq"
+        "fluctuation_rate", "nasdaq"
     )
     _, snp_top_fluctuation_rate_dict = get_top_level_list(
-        "market_capitalization", "snp"
+        "fluctuation_rate", "snp"
     )
 
     if request.method == "GET":
@@ -94,6 +94,8 @@ def detail():
 
         from datetime import datetime
 
+        unit_dict = {"silver": "usd", "orb": "value", "gold": "usd_pm", "cme": "open"}
+
         for row in individual_stock_json_data:
             # 날짜 리스트
 
@@ -109,7 +111,8 @@ def detail():
                 )
             )
             # 종가 리스트
-            values.append(row["usd_pm"])
+            unit_ = unit_dict[symbol]
+            values.append(row[unit_])
 
     # 이후 render_template을 사용하여 상세 정보를 템플릿에 전달하여 표시
     return render_template("detail.html", **locals())

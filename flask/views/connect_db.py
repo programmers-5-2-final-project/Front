@@ -107,7 +107,7 @@ def get_market_individual_data(market, symbol):
         )
     elif market == "material":
         column_names, json_data = conn_db_get_json_data(
-            f"select * from raw_data.{symbol};"
+            f"select * from raw_data.{symbol}_price;"
         )
     else:
         return None  # 처리하지 않는 시장에 대한 처리
