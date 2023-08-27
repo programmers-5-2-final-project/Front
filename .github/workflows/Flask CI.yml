@@ -35,6 +35,6 @@ jobs:
     - name: Run Flask Tests
       run: |
         cd flask;
-        python dashboard.py &
+        python app.py &
         sleep 10
         curl http://127.0.0.1:5000/
