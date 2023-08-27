@@ -98,14 +98,17 @@ def get_market_individual_data(market, symbol):
             f"select * from analytics.krx_stock_{symbol};"
         )
     elif market == "nasdaq":
+        symbol = symbol.lower()
         column_names, json_data = conn_db_get_json_data(
             f"select * from analytics.nas_stock_{symbol};"
         )
     elif market == "snp":
+        symbol = symbol.lower()
         column_names, json_data = conn_db_get_json_data(
             f"select * from analytics.snp_stock_{symbol};"
         )
     elif market == "material":
+        symbol = symbol.lower()
         column_names, json_data = conn_db_get_json_data(
             f"select * from raw_data.{symbol}_price;"
         )
@@ -148,8 +151,8 @@ def get_simbol_company_list_dict(market):
 
         symbols = {}
         for row in json_data:
-            symbols[row["symbol"].lower()] = row["name"]
-        # {000140 : '회사이름'}
+            symbols[row["symbol"]] = row["name"]
+        # {"AAPL" :	"Apple Inc."}
 
         return symbols
     elif market == "snp":
@@ -161,7 +164,7 @@ def get_simbol_company_list_dict(market):
 
         symbols = {}
         for row in json_data:
-            symbols[row["symbol"].lower()] = row["name"]
+            symbols[row["symbol"]] = row["name"]
         # {000140 : '회사이름'}
 
         return symbols

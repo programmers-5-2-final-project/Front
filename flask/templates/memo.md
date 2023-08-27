@@ -11,7 +11,23 @@
 
 [update] 세부 페이지 디자인 수정
 
+[update] 세부 페이지 정보 추가
+
+[update] 버튼 선택해서 볼 수 있게 
+
+[update] 세부 차트 단위 선택해서 볼 수 있게 하고 싶음
+
+상단바 통일
+
 ---
+[update] symbol 파라미터 수정 
+-> 문제점 : 
+    - symbol : 소문자로 바꿔야함
+        - stock['symbol']
+    - html
+
+
+
 [update] 상위 리스트 추가 
 
 - krx 시가총액 등락율

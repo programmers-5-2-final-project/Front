@@ -42,9 +42,7 @@ def home():
     _, nasdaq_top_fluctuation_rate_dict = get_top_level_list(
         "fluctuation_rate", "nasdaq"
     )
-    _, snp_top_fluctuation_rate_dict = get_top_level_list(
-        "fluctuation_rate", "snp"
-    )
+    _, snp_top_fluctuation_rate_dict = get_top_level_list("fluctuation_rate", "snp")
 
     if request.method == "GET":
         return render_template("home.html", **locals())  # html에 잘 넘겨줘야함
@@ -68,7 +66,9 @@ def detail():
     from .connect_db import get_market_individual_data, get_simbol_company_list_dict
 
     symbols = get_simbol_company_list_dict(market)
+
     company_name = symbols[symbol]
+
     _, individual_stock_json_data = get_market_individual_data(market, symbol)
 
     if market in ["kospi", "nasdaq", "snp"]:

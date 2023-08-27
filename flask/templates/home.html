@@ -196,16 +196,14 @@
             <div class="container">
             <form action="/main/detail" class="horizontal">
                 <label for="company"></label>
-                <!--<select name="market" id="market" class="form-control">
-                    <option value="nasdaq"></option>
-                </select>-->  
-                <!-- 드롭다운 -->
                 <input type="hidden" name="market" value="nasdaq">   
                 <select name="symbol" id="symbol" class="form-control">
                     <!-- {symbol : name} -->
                     {% for key, value in nasdaq_simbol_company_dict.items() %}
-                        <option value="{{ key }}" {% if (key == target) %} selected="selected" {% endif %}>
-                            {{ value }}
+                        <option value="{{ key }}" 
+                        {% if (key == target) %} selected="selected" {% endif %}
+                        >
+                        {{ value }}
                         </option>
                     {% endfor %}    
                 </select>
@@ -222,7 +220,7 @@
                     {% for stock in nasdaq_top_market_capitalization_dict %}
                     <tr>
                         <td>{{ stock['rank'] }}</td>
-                        <td class="td_name"><a href="/main/detail?market=kospi&symbol={{ stock['code'] }}">{{ stock['name'] }}</td>
+                        <td class="td_name"><a href="/main/detail?market=nasdaq&symbol={{ stock['symbol'] }}">{{ stock['name'] }}</td>
                         <td class="td_price">{{ stock['price'] }}</td>
                         <td class="td_ratio">{{ stock['changesratio'] }}%</td>
                     </tr>
@@ -251,7 +249,7 @@
                     {% for stock in nasdaq_top_fluctuation_rate_dict %}
                     <tr>
                         <td>{{ stock['rank'] }}</td>
-                        <td class="td_name"><a href="/main/detail?market=kospi&symbol={{ stock['code'] }}">{{ stock['name'] }}</td>
+                        <td class="td_name"><a href="/main/detail?market=nasdaq&symbol={{ stock['symbol'] }}">{{ stock['name'] }}</td>
                         <td class="td_price">{{ stock['price'] }}</td>
                         <td class="td_ratio">{{ stock['changesratio'] }}%</td>
                     </tr>
@@ -315,7 +313,7 @@
                     {% for stock in nasdaq_top_market_capitalization_dict %}
                     <tr>
                         <td>{{ stock['rank'] }}</td>
-                        <td class="td_name"><a href="/main/detail?market=kospi&symbol={{ stock['code'] }}">{{ stock['name'] }}</td>
+                        <td class="td_name"><a href="/main/detail?market=snp&symbol={{ stock['symbol'] }}">{{ stock['name'] }}</td>
                         <td class="td_price">{{ stock['price'] }}</td>
                         <td class="td_ratio">{{ stock['changesratio'] }}%</td>
                     </tr>
@@ -347,7 +345,7 @@
                     {% for stock in nasdaq_top_fluctuation_rate_dict %}
                     <tr>
                         <td>{{ stock['rank'] }}</td>
-                        <td class="td_name"><a href="/main/detail?market=kospi&symbol={{ stock['code'] }}">{{ stock['name'] }}</td>
+                        <td class="td_name"><a href="/main/detail?market=snp&symbol={{ stock['symbol'] }}">{{ stock['name'] }}</td>
                         <td class="td_price">{{ stock['price'] }}</td>
                         <td class="td_ratio">{{ stock['changesratio'] }}%</td>
                     </tr>

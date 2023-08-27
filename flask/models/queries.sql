@@ -12,7 +12,7 @@ LIMIT 50;
 -- 쿼리 1: nasdaq 상위 시가총액 불러오기
 
 SELECT
-	RANK() OVER (ORDER BY marcap DESC) rank,  *
+	RANK() OVER (ORDER BY marcap DESC) rank,  *, LOWER(symbol) low_symbol
 FROM raw_data.nas_co_info
 ORDER BY marcap DESC
 LIMIT 50;
@@ -21,7 +21,7 @@ LIMIT 50;
 -- 쿼리 2: snp 상위 시가총액 불러오기
 
 SELECT
-	RANK() OVER (ORDER BY marcap DESC) rank,  *
+	RANK() OVER (ORDER BY marcap DESC) rank,  *, LOWER(symbol) low_symbol
 FROM raw_data.snp_co_info
 ORDER BY marcap DESC
 LIMIT 50;
@@ -41,14 +41,14 @@ limit 50;
 
 -- 쿼리 4: nasdaq 상위 등락률 불러오기
 SELECT
-	RANK() OVER (ORDER BY changesratio DESC) rank,  *
+	RANK() OVER (ORDER BY changesratio DESC) rank,  *, LOWER(symbol) low_symbol
 FROM raw_data.nas_co_info
 ORDER BY changesratio desc
 LIMIT 50;
 
 -- 쿼리 5: snp 상위 등락률 불러오기
 SELECT
-	RANK() OVER (ORDER BY changesratio DESC) rank,  *
+	RANK() OVER (ORDER BY changesratio DESC) rank,  *, LOWER(symbol) low_symbol
 FROM raw_data.snp_co_info
 ORDER BY changesratio desc
 LIMIT 50;
