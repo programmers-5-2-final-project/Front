@@ -12,7 +12,10 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-
+      
+    - name: List directory contents
+      run: ls -tl
+      
     - name: Build Docker Image
       run: |
         docker build -t de52/flask_stock:latest .
