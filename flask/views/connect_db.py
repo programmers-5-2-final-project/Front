@@ -20,7 +20,7 @@
 """
 
 # 쿼리 파일 로드
-with open("./models/queries.sql", "r") as file:
+with open("./models/queries.sql", "r", encoding="utf-8") as file:
     """
     -- 쿼리 0: krx 상위 시가총액 불러오기
     -- 쿼리 1: nasdaq, snp 상위 시가총액 불러오기
