@@ -52,3 +52,41 @@ SELECT
 FROM raw_data.snp_co_info
 ORDER BY changesratio desc
 LIMIT 50;
+
+-- 쿼리 6: 거래량 상위 50 불러오기 
+
+with gold as(
+select date, usd_pm as gold
+from raw_data.gold_price
+ORDER BY date DESC
+LIMIT 1),
+
+silver as(select date, usd as silver
+from raw_data.silver_price
+ORDER BY date DESC
+LIMIT 1),
+
+cme as (select date, last as cme
+from raw_data.cme_price
+ORDER BY date DESC
+LIMIT 1),
+
+orb as (select date, value as orb
+from raw_data.orb_price
+ORDER BY date DESC
+LIMIT 1)
+
+select *
+from gold join silver  ON 1 = 1
+join cme on 1=1
+join orb on 1=1 ;
+
+
+-- 7 상위 거래량 50
+select
+	RANK() OVER (ORDER BY volume DESC) rank,  *,
+	TO_CHAR(close, 'FM999,999,999,999') AS price
+from raw_data.krx_list
+WHERE market like 'KOSPI'
+order by volume desc
+limit 50;
