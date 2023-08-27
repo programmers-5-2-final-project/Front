@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="../static/styles.css" rel="stylesheet" type="text/css">
+    <script src="../static/home.js"></script>
+    <script src="../static/kospi_search.js"></script>
+    <script>
+        const kospi_simbol_company_dict = {{ kospi_simbol_company_dict | tojson | safe }};
+
+        // 각 버튼을 클릭했을 때 해당 섹션으로 스크롤되는 함수
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            section.scrollIntoView({ behavior: "smooth" });
+        }
+
+        // 버튼을 클릭했을 때 지정된 높이 (vh 단위)로 스크롤되는 함수
+        function scrollToVH(vh) {
+            const windowHeight = window.innerHeight;
+            const scrollToHeight = windowHeight * (vh / 100);
+            window.scrollTo({
+                top: scrollToHeight,
+                behavior: "smooth"
+            });
+        }
+
+        
+    </script>
+    
+    <title>Stock Dashboard Home</title>
+    <!--kospi_simbol_company_dict : {코스피 종목코드 : 회사 이름} -->
+</head>
+
+<body style="background-color: #F5F5F5;">
+<!-- 상단 바 -->
+<div class="navbar">
+    <div class="logo">
+        <!--로고 자리-->
+        <a href="#"></a>
+    </div>
+    <ul class="ml-auto nav ">   
+        <li><button class="nav-link btn btn-transparent bar-button" onclick="scrollToSection('home')" href="#">Home</a></li>
+        <li><button class="nav-link btn btn-transparent bar-button" onclick="scrollToSection('kospi')"  href="#">코스피</a></li>
+        <li><button class="nav-link btn btn-transparent bar-button" onclick="scrollToSection('nasdaq')"  href="#">나스닥</a></li>
+        <li><button class="nav-link btn btn-transparent bar-button" onclick="scrollToSection('snp')"  href="#">S&P</a></li>
+        <li><button class="nav-link btn btn-transparent bar-button" onclick="scrollToSection('material')"  href="#">원자재</a></li>
+    </ul>
+</div>
+
+<!-- 1p -->
+<div id="home">  
+    <!-- 상단바 자리 -->
+    <div style="height: 9vh;"></div>
+
+    <div class="sub_card ">
+    <div class="top">
+        <h1 class="main_header">주식 분석 대시보드</h1>
+    </div>
+
+    <div class="horizontal index_card">
+        <div class="left">
+        <!-- 왼쪽 내용 -->
+        <h1></h1>
+        <p></p>
+            
+        <main>
+            <div>
+                
+            </div>
+        </main>
+        </div>
+        <div class="right">
+        <!-- 오른쪽 내용 -->
+        <h1></h1>
+        <p></p>
+        </div>
+    </div>
+    </div>
+</div>
+    
+<!-- 2p 코스피 -->
+<div id="kospi"> 
+    <div style="height: 9vh;"></div>
+    
+    <div class="sub_card">
+        <div class="top">
+        <div class="horizontal" >
+            <h2 class="sub-title" >코스피</h2>
+            <button class="superset-button" onclick="window.location.href='http://43.202.65.81:8088/superset/dashboard/6/?standalone=3'">개요 대시보드</button>
+        </div>
+    </div>
+
+    <div class="horizontal index_card">
+        
+    <div class="left">
+
+
+        <div class="container">
+        <form action="/main/detail" class="horizontal">
+            <label for="company"></label>
+            <input type="hidden" name="market" value="kospi">   
+            <select name="symbol" id="symbol" class="form-control">
+                {% for key, value in kospi_simbol_company_dict.items() %}
+                    <option value="{{ key }}" 
+                    {% if (key == target) %} selected="selected" {% endif %}
+                    >
+                    {{ value }}
+                    </option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="submit" class="submit-button inline-buttons">
+        </form>
+        </div>
+
+        <!-- 코스피 시가총액 상위 20 -->
+        <!--rank, name, close, changesratio-->
+        <h4 class="top-list-header mt-3">시가총액 상위 50</h4>
+        
+        <div class="scrollable-list mt-3">
+            <table class="stock-list">
+                <tbody>
+                {% for stock in kospi_top_market_capitalization_dict %}
+                <tr>
+                    <td>{{ stock['rank'] }}</td>
+                    <td class="td_name"><a href="/main/detail?market=kospi&symbol={{ stock['code'] }}">{{ stock['name'] }}</td>
+                    <td class="td_price">{{ stock['price'] }}</td>
+                    <td class="td_ratio">{{ stock['changesratio'] }}%</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+            
+        
+
+
+    </div>
+
+
+    <div class="right">
+        <!-- 오른쪽 내용 -->
+        <div class="container" style="height: 6.5vh;">
+
+        </div>
+        
+        <!-- 코스피 등락률 상위 20 -->
+        <!--rank, name, close, changesratio-->
+        <h4 class="top-list-header mt-3">등락률 상위 50</h4>
+        
+        <div class="scrollable-list mt-3">
+            <table class="stock-list">
+                <tbody>
+                {% for stock in kospi_top_fluctuation_rate_dict %}
+                <tr>
+                    <td>{{ stock['rank'] }}</td>
+                    <td class="td_name"><a href="/main/detail?market=kospi&symbol={{ stock['code'] }}">{{ stock['name'] }}</td>
+                    <td class="td_price">{{ stock['price'] }}</td>
+                    <td class="td_ratio">{{ stock['changesratio'] }}%</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        
+        
+        
+    </div>
+    </div>
+    
+    
+    </div>
+    </main>
+</div>
+</div>
+
+<!-- 3p 나스닥 -->
+<div id="nasdaq">  
+    <!-- 상단바 자리 -->
+    <div style="height: 9vh;"></div>
+    
+    <div class="sub_card">
+        <div class="top">
+        <div class="horizontal">
+            <h2 class="sub-title" >나스닥</h2>
+            <button class="superset-button" onclick="window.location.href='http://43.202.65.81:8088/superset/dashboard/5/?standalone=3'">개요 대시보드</button>
+        </div>
+    </div>
+        
+        <div class="horizontal index_card">
+        <div class="left">
+        <!-- 왼쪽 내용 -->
+            <div class="container">
+            <form action="/main/detail" class="horizontal">
+                <label for="company"></label>
+                <!--<select name="market" id="market" class="form-control">
+                    <option value="nasdaq"></option>
+                </select>-->  
+                <!-- 드롭다운 -->
+                <input type="hidden" name="market" value="nasdaq">   
+                <select name="symbol" id="symbol" class="form-control">
+                    <!-- {symbol : name} -->
+                    {% for key, value in nasdaq_simbol_company_dict.items() %}
+                        <option value="{{ key }}" {% if (key == target) %} selected="selected" {% endif %}>
+                            {{ value }}
+                        </option>
+                    {% endfor %}    
+                </select>
+                <input type="submit" value="submit" class="submit-button inline-buttons">
+            </form>
+            </div>
+            <!-- 나스닥 시가총액 상위 20 -->
+            <!--rank, name, close, changesratio-->
+            <h4 class="top-list-header mt-3">시가총액 상위 50</h4>
+            
+            <div class="scrollable-list mt-3">
+                <table class="stock-list">
+                    <tbody>
+                    {% for stock in nasdaq_top_market_capitalization_dict %}
+                    <tr>
+                        <td>{{ stock['rank'] }}</td>
+                        <td class="td_name"><a href="/main/detail?market=kospi&symbol={{ stock['code'] }}">{{ stock['name'] }}</td>
+                        <td class="td_price">{{ stock['price'] }}</td>
+                        <td class="td_ratio">{{ stock['changesratio'] }}%</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+
+        </div>
+
+
+        <div class="right">
+            <!-- 오른쪽 내용 -->
+            <div class="container" style="height: 6.5vh;">
+
+            </div>
+            
+            <!-- 코스피 등락률 상위 20 -->
+            <!--rank, name, close, changesratio-->
+            <h4 class="top-list-header mt-3">등락률 상위 50</h4>
+            
+            <div class="scrollable-list mt-3">
+                <table class="stock-list">
+                    <tbody>
+                    {% for stock in nasdaq_top_fluctuation_rate_dict %}
+                    <tr>
+                        <td>{{ stock['rank'] }}</td>
+                        <td class="td_name"><a href="/main/detail?market=kospi&symbol={{ stock['code'] }}">{{ stock['name'] }}</td>
+                        <td class="td_price">{{ stock['price'] }}</td>
+                        <td class="td_ratio">{{ stock['changesratio'] }}%</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            
+            
+        </div>
+        </div>
+        
+    </div>
+</div>
+
+
+<!-- 4p snp -->
+<div id="snp"> 
+    <div style="height: 9vh;"></div>
+    
+    <div class="sub_card">
+        <div class="top">
+        <div class="horizontal">
+            <h2 class="sub-title" >S&P500</h2>
+            <button class="superset-button" onclick="window.location.href='http://43.202.65.81:8088/superset/dashboard/3/?standalone=3'">개요 대시보드</button>
+        </div>
+    </div>
+        <div class="horizontal index_card">
+        <div class="left">
+        <!-- 왼쪽 내용 -->
+            <div class="container">
+            <form action="/main/detail" class="horizontal">
+                <label for="company"></label>
+                <!--<select name="market" id="market" class="form-control">
+                    <option value="nasdaq"></option>
+                </select>-->
+                <!-- 드롭다운 -->
+                <input type="hidden" name="market" value="snp">  
+                <select name="symbol" id="symbol" class="form-control">
+                    <!-- {symbol : name} -->
+                    {% for key, value in snp_simbol_company_dict.items() %}
+                        <option value="{{ key }}" {% if (key == target) %} selected="selected" {% endif %}>
+                            {{ value }}
+                        </option>
+
+                    {% endfor %}    
+                </select>
+                
+                
+                <input type="submit" value="submit" class="submit-button inline-buttons">
+
+            </form>
+            </div>
+            <!-- snp 시가총액 상위 20 -->
+            <!--rank, name, close, changesratio-->
+            <h4 class="top-list-header mt-3">시가총액 상위 50</h4>
+            
+            <div class="scrollable-list mt-3">
+                <table class="stock-list">
+                    <tbody>
+                    {% for stock in nasdaq_top_market_capitalization_dict %}
+                    <tr>
+                        <td>{{ stock['rank'] }}</td>
+                        <td class="td_name"><a href="/main/detail?market=kospi&symbol={{ stock['code'] }}">{{ stock['name'] }}</td>
+                        <td class="td_price">{{ stock['price'] }}</td>
+                        <td class="td_ratio">{{ stock['changesratio'] }}%</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            
+
+            
+            
+        </div>
+
+
+        <div class="right">
+            <!-- 오른쪽 내용 -->
+            <div class="container" style="height: 6.5vh;">
+
+            </div>
+            
+            <!-- 나스닥 등락률 상위 20 -->
+            <!--rank, name, close, changesratio-->
+            <h4 class="top-list-header mt-3">등락률 상위 50</h4>
+            
+            <div class="scrollable-list mt-3">
+                <table class="stock-list">
+                    <tbody>
+                    {% for stock in nasdaq_top_fluctuation_rate_dict %}
+                    <tr>
+                        <td>{{ stock['rank'] }}</td>
+                        <td class="td_name"><a href="/main/detail?market=kospi&symbol={{ stock['code'] }}">{{ stock['name'] }}</td>
+                        <td class="td_price">{{ stock['price'] }}</td>
+                        <td class="td_ratio">{{ stock['changesratio'] }}%</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 5p 원자재 -->
+<div id="material"> 
+    <div style="height: 9vh;"></div>
+    
+    <div class="sub_card">
+        <div class="top">
+        <div class="horizontal">
+            <h2 class="sub-title" >원자재</h2>
+            <button class="superset-button" onclick="window.location.href='http://43.202.65.81:8088/superset/dashboard/1/?standalone=3'">개요 대시보드</button>
+        </div>
+    </div>
+        <div class="horizontal index_card">
+        <div class="left">
+        <!-- 왼쪽 내용 -->
+            <div class="container">
+            <form action="/main/detail" class="horizontal">
+                <label for="company"></label>
+                <!--<select name="market" id="market" class="form-control">
+                    <option value="nasdaq"></option>
+                </select>-->
+                <!-- 드롭다운 -->
+                <input type="hidden" name="market" value="material">  
+                <select name="symbol" id="symbol" class="form-control">
+                    <!-- {symbol : name} -->
+                    {% for key, value in material_simbol_company_dict.items() %}
+                        <option value="{{ key }}" {% if (key == target) %} selected="selected" {% endif %}>
+                            {{ value }}
+                        </option>
+
+                    {% endfor %}    
+                </select>
+                
+                
+                <input type="submit" value="submit" class="submit-button inline-buttons">
+
+            </form>
+
+            
+
+            </div>
+            
+            
+            
+        </div>
+
+
+        <div class="right">
+            <!-- 오른쪽 내용 -->
+            <div class="container" style="height: 6.5vh;">
+
+            </div>
+            
+            
+            
+        </div>
+    </div>
+</div>  
+    
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

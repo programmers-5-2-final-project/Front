@@ -1,0 +1,402 @@
+@font-face {
+    font-family: 'ELAND_Choice_M';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/ELAND_Choice_M.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+
+* {
+    font-family: 'NanumSquare', sans-serif;
+}
+
+h1 {
+    font-family: 'ELAND_Choice_M', sans-serif; color : #3F3A37;
+    text-align: center; /* 전체 본문 가운데 정렬 */
+    margin-top: 50px; /* h1 상단 여백 */
+}
+
+h3 {
+    font-family: 'ELAND_Choice_M', sans-serif; color : #3F3A37;
+    text-align: center; /* 전체 본문 가운데 정렬 */
+    margin-top: 20px; /* h1 상단 여백 */
+}
+
+body {
+    text-align: center; /* 전체 본문 가운데 정렬 */
+}
+
+
+thead {
+    background-color: #f1f1f1;
+    font-family: 'NanumSquare', sans-serif;
+    font-weight: bold;
+}
+
+/* tbody 스타일 */
+tbody {
+    background-color: #ffffff;
+    font-family: 'NanumSquare', sans-serif;
+}
+
+form {
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%; /* 변경된 부분 */
+    /* max-width: 300px; /* 추가된 부분 */
+    margin: 5 auto;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    font-family: 'NanumSquare', sans-serif; 
+    color : #3F3A37;
+    text-align: center; /* 전체 본문 가운데 정렬 */
+    margin-top: 10px; 
+}
+
+select, input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+input[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+canvas {
+    width: auto !important;
+    height: fit-content !important;
+    max-width: 100%;
+    min-height: 100%;
+    max-height: 100vh;
+    box-sizing: border-box !important;
+    margin: auto;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Carter+One&display=swap');
+
+a, u {
+    text-decoration: none;
+    color:#FFf;
+}
+
+p {
+    word-break: keep-all;
+    word-wrap: break-word;
+    color: #eaeaea;
+    font-size: 0.875rem;
+    text-align: left;
+    line-height: 1.2rem;
+}
+
+canvas {
+    width: auto !important;
+    height: fit-content !important;
+    max-width: 50%;
+    min-height: 50%;
+    max-height: 150vh;
+    box-sizing: border-box !important;
+    margin: auto;
+}
+
+
+/*util class*/
+
+.title {
+    display: flex; /* 요소를 가로 방향으로 배치 */
+    justify-content: center; /* 가로 방향으로 가운데 정렬 */
+    align-items: center; /* 세로 방향으로 가운데 정렬 */
+    gap: 20px; /* 요소 사이의 간격 설정 */
+    font-family: 'ELAND_Choice_M', sans-serif; color : #3F3A37;
+    text-align: left; /* 전체 본문 가운데 정렬 */
+    margin-left: 6vh;
+    margin-top: 7vh; /* h1 상단 여백 */
+    font-weight: bold;
+    margin-bottom: 3vh;
+    font-size: 5vh;
+    -webkit-box-orient: horizontal;
+}
+
+.title_market{
+    color: rgb(36, 69, 126);
+    font-weight: bold; /* 글꼴 두께 추가 */
+    font-size: 6vh; /* 글꼴 크기 조정 */
+}
+
+.box {
+    background-color: #5d83bf60;
+    color: #333333;
+    transition: background-color 0.5s;
+    border-radius: 8px;
+    text-align: center; /* 전체 본문 가운데 정렬 */
+    padding: 1vh; 
+
+}
+
+.navbar {
+    /* background-color: #CCCCCC; */
+    background-color: #eccbdfb6;
+    color: #333333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 9vh;
+    /* padding: 4px 20px; */
+    /* position: fixed; */
+    position: fixed; /* 상단 바를 고정시킴 */
+    width: 100%; /* 너비를 화면 너비에 맞춤 */
+    top: 0; /* 화면 상단에 위치시킴 */
+    left: 0; /* 화면 좌측에 위치시킴 */
+    z-index: 1000; /* 다른 요소 위에 레이어를 설정 */
+}
+
+.logo {
+    width: 30vh;
+    height: auto;
+    margin-right: 10px;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar li {
+    margin-right: 20px;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #333333;
+    border: 2px;
+    border-radius: 10px;
+    padding: 8px 12px;
+    transition: background-color 0.3s;
+}
+
+.navbar a:hover {
+    color: #FF5F15;
+}
+
+.bar-button {
+    background-color: rgba(0, , , 0);;
+    color: #333333;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.bar-button:hover {
+    background-color: #0056b3;
+}
+
+
+.superset-button {
+    background-color: #FFA500;
+    color: #333333;
+    border: none;
+    padding: 1vh 1vh;
+    font-size: 2.5vh;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.5s;
+    display: flex;
+    margin: 0;
+    padding: 4;
+    margin-top: 7vh; /* 위 여백 조정 */
+    margin-left: 60vh;
+    margin-bottom: 4vh;
+}
+
+.spacer {
+    height: 20px; /* 원하는 여백의 높이 */
+}
+
+.large_spacer {
+    height: 60px; /* 원하는 여백의 높이 */
+}
+
+
+/* 수평 방향으로 아이템을 나열하는 클래스 */
+.horizontal {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+}
+
+/* 수직 방향으로 아이템을 나열하는 클래스 */
+.vertical {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+/* 아이템을 시작점에 정렬하는 클래스 */
+.align-start {
+    -webkit-box-align: start;
+    -webkit-align-items: flex-start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+}
+
+/* 아이템을 아래쪽 끝에 정렬하는 클래스 */
+.align-bottom {
+    -webkit-box-align: end;
+    -webkit-align-items: flex-end;
+    -ms-flex-align: end;
+    align-items: flex-end;
+}
+
+/* 아이템을 중앙에 정렬하는 클래스 */
+.align-center {
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+/* 아이템을 늘림(아이템의 크기를 늘림) */
+.align-stretch {
+    -webkit-box-align: stretch;
+    -webkit-align-items: stretch;
+    -ms-flex-align: stretch;
+    align-items: stretch;
+}
+
+/* 아이템을 시작점에 정렬하고 감싸는 레이아웃 클래스 */
+.justify-start-wrap {
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+/* 아이템을 중앙에 정렬하고 감싸는 레이아웃 클래스 */
+.justify-center-wrap {
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+/* 아이템 사이에 공간을 동일하게 배치하고 감싸는 레이아웃 클래스 */
+.space-between-wrap {
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+/* 아이템 주위에 공간을 동일하게 배치하는 클래스 */
+.space-around {
+    -webkit-justify-content: space-around;
+    -ms-flex-pack: distribute;
+    justify-content: space-around;
+}
+
+/* 아이템을 끝점에 정렬하는 클래스 */
+.justify-end {
+    -webkit-box-pack: end;
+    -webkit-justify-content: flex-end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+}
+
+/* 420px 이상의 화면 너비에서 해당 클래스를 가진 요소를 숨김 */
+@media (min-width: 420px) {
+    .for-mobile {
+        display:none;
+    }
+}
+
+/* 540px 이하의 화면 너비와 950px 이하의 화면 높이에서 해당 클래스를 가진 요소를 숨김 */
+@media (max-width: 540px) and (max-height: 950px) {
+    .for-not-mobile {
+        display:none;
+    }
+}
+
+/* header, footer */
+.App-header {
+    height: 80px;
+    color: white;
+    width: 100%;
+    max-width: 1280px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.App-footer {
+height: fit-content;
+min-height: 200px;
+background-color:#3D3D3D;
+color:#fff;
+width: 100%;
+max-width: 1280px;
+align-items: flex-start;
+box-shadow: 0 0 0 100vmax #3D3D3D;
+clip-path: inset(0 -100vmax);
+word-break: keep-all;
+word-wrap: break-word;
+padding: 40px 0;
+text-align: left;
+}
+
+/* 그리드 레이아웃을 설정하여 내부 요소들의 배치를 지정 */
+.footer-wrap {
+display: grid;
+grid-template-rows: auto auto;
+justify-items: start;
+gap: 8px;
+}
+
+.footer-title {
+font-family: 'Carter One', cursive;
+font-size: 2.5rem;
+line-height: 3rem;
+color:#FF5F15;
+}
