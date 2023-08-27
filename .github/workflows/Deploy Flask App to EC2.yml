@@ -27,5 +27,6 @@ jobs:
         sudo docker pull de52/flask_stock:latest
         sudo docker stop flask_app || true
         sudo docker rm flask_app || true
-        sudo docker run -d --name flask_app --env-file /home/ubuntu/.flaskenv -p 5000:5000 de52/flask_stock:latest
+        sudo docker run -d --name flask_app --env-file /home/ubuntu/.flaskenv -p 5000:5000 de52/flask_stock:latest; \
+        sudo docker ps; \
         rm -f private_key.pem"
