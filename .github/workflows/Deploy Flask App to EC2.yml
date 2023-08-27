@@ -1,0 +1,31 @@
+name: Deploy Flask App to EC2
+
+on:
+  workflow_run:
+    workflows: ["Build and Push Flask Docker Image"]
+    types:
+      - completed
+      
+jobs:
+  test-ec2-connection:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: "context"
+      env:
+        COMMIT_ID: ${{ github.sha }}
+      run: echo "Commit id => $COMMIT_ID"
+    - name: Execute g on EC2
+      env:
+        PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+        HOST: ${{ secrets.EC2_HOST }}
+        USER: ${{ secrets.EC2_USER }}
+      run: |
+        echo "$PRIVATE_KEY" > private_key.pem
+        chmod 600 private_key.pem
+        ssh -o StrictHostKeyChecking=no -i private_key.pem $USER@$HOST "\
+        docker pull de52/flask_stock:latest
+        docker stop flask_app || true
+        docker rm flask_app || true
+        docker run -d --name flask_app --env-file /home/ubuntu/.flaskenv -p 5000:5000 de52/flask_stock:latest
+        rm -f private_key.pem"
