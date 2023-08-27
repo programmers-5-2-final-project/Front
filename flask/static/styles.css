@@ -8,7 +8,12 @@
 
 @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
 
-
+@font-face {
+    font-family: 'ELAND_Nice_M';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/ELAND_Nice_M.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 
 * {
     font-family: 'NanumSquare', sans-serif;
@@ -75,6 +80,36 @@ h2 {
     font-weight: bold;
     margin-bottom: 3vh;
     font-size: 5vh;
+}
+
+.home-sub-title {
+    font-family: 'ELAND_Choice_M', sans-serif; color : #3F3A37;
+    text-align: left; /* 전체 본문 가운데 정렬 */
+    margin-left: 2vh;
+    margin-top: 7vh; /* h1 상단 여백 */
+    font-weight: bold;
+    margin-bottom: 3vh;
+    font-size: 5vh;
+}
+
+.home_index {
+    font-family: 'NanumSquare', sans-serif; color : #3F3A37;
+    text-align: left; /* 전체 본문 가운데 정렬 */
+    margin-left: 2.5vh;
+    margin-top: 2vh; /* h1 상단 여백 */ 
+    margin-bottom: 2.5vh;
+    font-size: 4vh;
+    padding: 1;
+}
+
+.home_index_value {
+    font-family: 'ELAND_Nice_M', sans-serif; color : #206DC1;
+    text-align: right; /* 전체 본문 가운데 정렬 */
+    margin-left: 2.5vh;
+    margin-top: 2vh; /* h1 상단 여백 */ 
+    margin-bottom: 2.5vh;
+    font-size: 4vh;
+    padding: 1;
 }
 
 label {

@@ -29,8 +29,48 @@ with open("./models/queries.sql", "r") as file:
     sql_queries = file.read()
 
 
-def get_variables():
-    return
+def get_material_latest_price():
+    _, material_dic = conn_db_get_json_data(sql_queries.split(";")[6])
+    material_dic = material_dic[0]
+    # gold_latest_price = material_dic
+    # silver_latest_price = 0
+    # cme_latest_price = 0
+    # orb_latest_price = 0
+    gold_latest_price = material_dic["gold"]
+    silver_latest_price = material_dic["silver"]
+    cme_latest_price = material_dic["cme"]
+    orb_latest_price = material_dic["orb"]
+    return gold_latest_price, silver_latest_price, cme_latest_price, orb_latest_price
+
+
+def get_world_index(table_name):
+    """
+    세계 주요 지수 최근 데이터 가져오기
+    - 종류
+        index_usd_krw_exchange_rate
+        index_kospi
+        index_nasdaq
+        index_snp
+        index_djia
+    """
+    if table_name in ["index_usd_krw_exchange_rate", "index_kospi"]:
+        _, json_data = conn_db_get_json_data(
+            f"""
+        SELECT *, TO_CHAR(close, 'FM999,999,999,999') AS price
+        FROM raw_data.{table_name}
+        ORDER BY date DESC
+        LIMIT 1;"""
+        )
+    else:
+        _, json_data = conn_db_get_json_data(
+            f"""SELECT *, 
+            TO_CHAR(ROUND(close::numeric, 3), 'FM999,999,999,999.99') AS price
+            FROM raw_data.{table_name}
+            ORDER BY date DESC
+            LIMIT 1;"""
+        )
+
+    return json_data[0]["price"]
 
 
 # 쿼리 실행 예시
@@ -69,6 +109,10 @@ def get_top_level_list(criteria, market):
             return {"rank": "", "name": "", "code": "", "price": "", "changesratio": ""}
         else:
             return {"rank": "", "name": "", "code": "", "price": "", "changesratio": ""}
+    elif criteria == "volume":
+        if market == "kospi":
+            return conn_db_get_json_data(sql_queries.split(";")[7])
+
     else:
         return {"rank": "", "name": "", "code": "", "price": "", "changesratio": ""}
 
@@ -98,14 +142,17 @@ def get_market_individual_data(market, symbol):
             f"select * from analytics.krx_stock_{symbol};"
         )
     elif market == "nasdaq":
+        symbol = symbol.lower()
         column_names, json_data = conn_db_get_json_data(
             f"select * from analytics.nas_stock_{symbol};"
         )
     elif market == "snp":
+        symbol = symbol.lower()
         column_names, json_data = conn_db_get_json_data(
             f"select * from analytics.snp_stock_{symbol};"
         )
     elif market == "material":
+        symbol = symbol.lower()
         column_names, json_data = conn_db_get_json_data(
             f"select * from raw_data.{symbol}_price;"
         )
@@ -148,8 +195,8 @@ def get_simbol_company_list_dict(market):
 
         symbols = {}
         for row in json_data:
-            symbols[row["symbol"].lower()] = row["name"]
-        # {000140 : '회사이름'}
+            symbols[row["symbol"]] = row["name"]
+        # {"AAPL" :	"Apple Inc."}
 
         return symbols
     elif market == "snp":
@@ -161,7 +208,7 @@ def get_simbol_company_list_dict(market):
 
         symbols = {}
         for row in json_data:
-            symbols[row["symbol"].lower()] = row["name"]
+            symbols[row["symbol"]] = row["name"]
         # {000140 : '회사이름'}
 
         return symbols

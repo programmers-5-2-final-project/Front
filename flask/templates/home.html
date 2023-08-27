@@ -62,17 +62,66 @@
     <div class="horizontal index_card">
         <div class="left">
         <!-- 왼쪽 내용 -->
-        <h1></h1>
-        <p></p>
-            
-        <main>
-            <div>
-                
-            </div>
-        </main>
+        <!-- 코스피 등락률 상위 20 -->
+        <!--rank, name, close, changesratio-->
+        <h4 class="top-list-header mt-5">코스피 상위 거래량</h4>
+        
+        <div class="scrollable-list mt-3">
+        
+            <table class="stock-list">
+                <tbody>
+                {% for stock in kospi_top_volume_dict %}
+                <tr>
+                    <td>{{ stock['rank'] }}</td>
+                    <td class="td_name"><a href="/main/detail?market=kospi&symbol={{ stock['code'] }}">{{ stock['name'] }}</td>
+                    <td class="td_price">{{ stock['price'] }}</td>
+                    <td class="td_ratio">{{ stock['changesratio'] }}%</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        
         </div>
         <div class="right">
         <!-- 오른쪽 내용 -->
+        <h2 class="home-sub-title" >세계 주요 지수</h2>
+        <div class="horizontal mt-5" >
+            <h4 class="home_index">원-달러 환율</h4> 
+            <div style='position: absolute; right: 3vh;'>  
+                <h4 class="home_index_value">₩ {{index_usd_krw_exchange_rate}}</h4> 
+            </div>
+            
+        </div>
+        <div class="horizontal" >
+            <h4 class="home_index">코스피 지수</h4> 
+            <div style='position: absolute; right: 3vh;'>  
+            <h4 class="home_index_value">{{index_kospi}}</h4> 
+            </div>
+        </div>
+        <div class="horizontal" >
+            <h4 class="home_index">나스닥 지수</h4> 
+            <div style='position: absolute; right: 3vh;'>  
+            <h4 class="home_index_value">{{index_nasdaq}}</h4> 
+            </div>
+        </div>
+        <div class="horizontal" >
+            <h4 class="home_index">S&P 500 지수</h4> 
+            <div style='position: absolute; right: 3vh;'>  
+            <h4 class="home_index_value">{{index_snp}}</h4> 
+            </div>
+        </div>
+        <div class="horizontal" >
+            <h4 class="home_index">다우존스 지수</h4> 
+            <div style='position: absolute; right: 3vh;'>  
+            <h4 class="home_index_value">{{index_djia}}</h4>
+            </div> 
+        </div>
+        
+        
+
+
         <h1></h1>
         <p></p>
         </div>
@@ -196,16 +245,14 @@
             <div class="container">
             <form action="/main/detail" class="horizontal">
                 <label for="company"></label>
-                <!--<select name="market" id="market" class="form-control">
-                    <option value="nasdaq"></option>
-                </select>-->  
-                <!-- 드롭다운 -->
                 <input type="hidden" name="market" value="nasdaq">   
                 <select name="symbol" id="symbol" class="form-control">
                     <!-- {symbol : name} -->
                     {% for key, value in nasdaq_simbol_company_dict.items() %}
-                        <option value="{{ key }}" {% if (key == target) %} selected="selected" {% endif %}>
-                            {{ value }}
+                        <option value="{{ key }}" 
+                        {% if (key == target) %} selected="selected" {% endif %}
+                        >
+                        {{ value }}
                         </option>
                     {% endfor %}    
                 </select>
@@ -222,8 +269,8 @@
                     {% for stock in nasdaq_top_market_capitalization_dict %}
                     <tr>
                         <td>{{ stock['rank'] }}</td>
-                        <td class="td_name"><a href="/main/detail?market=kospi&symbol={{ stock['code'] }}">{{ stock['name'] }}</td>
-                        <td class="td_price">{{ stock['price'] }}</td>
+                        <td class="td_name"><a href="/main/detail?market=nasdaq&symbol={{ stock['symbol'] }}">{{ stock['name'] }}</td>
+                        <td class="td_price">{{ stock['previous_close'] }}</td>
                         <td class="td_ratio">{{ stock['changesratio'] }}%</td>
                     </tr>
                     {% endfor %}
@@ -251,8 +298,8 @@
                     {% for stock in nasdaq_top_fluctuation_rate_dict %}
                     <tr>
                         <td>{{ stock['rank'] }}</td>
-                        <td class="td_name"><a href="/main/detail?market=kospi&symbol={{ stock['code'] }}">{{ stock['name'] }}</td>
-                        <td class="td_price">{{ stock['price'] }}</td>
+                        <td class="td_name"><a href="/main/detail?market=nasdaq&symbol={{ stock['symbol'] }}">{{ stock['name'] }}</td>
+                        <td class="td_price">{{ stock['previous_close'] }}</td>
                         <td class="td_ratio">{{ stock['changesratio'] }}%</td>
                     </tr>
                     {% endfor %}
@@ -315,8 +362,8 @@
                     {% for stock in nasdaq_top_market_capitalization_dict %}
                     <tr>
                         <td>{{ stock['rank'] }}</td>
-                        <td class="td_name"><a href="/main/detail?market=kospi&symbol={{ stock['code'] }}">{{ stock['name'] }}</td>
-                        <td class="td_price">{{ stock['price'] }}</td>
+                        <td class="td_name"><a href="/main/detail?market=snp&symbol={{ stock['symbol'] }}">{{ stock['name'] }}</td>
+                        <td class="td_price">{{ stock['previous_close'] }}</td>
                         <td class="td_ratio">{{ stock['changesratio'] }}%</td>
                     </tr>
                     {% endfor %}
@@ -347,8 +394,8 @@
                     {% for stock in nasdaq_top_fluctuation_rate_dict %}
                     <tr>
                         <td>{{ stock['rank'] }}</td>
-                        <td class="td_name"><a href="/main/detail?market=kospi&symbol={{ stock['code'] }}">{{ stock['name'] }}</td>
-                        <td class="td_price">{{ stock['price'] }}</td>
+                        <td class="td_name"><a href="/main/detail?market=snp&symbol={{ stock['symbol'] }}">{{ stock['name'] }}</td>
+                        <td class="td_price">{{ stock['previous_close'] }}</td>
                         <td class="td_ratio">{{ stock['changesratio'] }}%</td>
                     </tr>
                     {% endfor %}
@@ -400,6 +447,9 @@
             
 
             </div>
+
+            
+            
             
             
             
@@ -411,7 +461,32 @@
             <div class="container" style="height: 6.5vh;">
 
             </div>
-            
+            <h2 class="home-sub-title" ></h2>
+            <div class="horizontal mt-5" >
+                <h4 class="home_index">금</h4> 
+                <div style='position: absolute; right: 3vh;'>  
+                    <h4 class="home_index_value">$ {{gold_latest_price}}</h4> 
+                </div>
+                
+            </div>
+            <div class="horizontal" >
+                <h4 class="home_index">은</h4> 
+                <div style='position: absolute; right: 3vh;'>  
+                <h4 class="home_index_value">$ {{silver_latest_price}}</h4> 
+                </div>
+            </div>
+            <div class="horizontal" >
+                <h4 class="home_index">구리</h4> 
+                <div style='position: absolute; right: 3vh;'>  
+                <h4 class="home_index_value">$ {{cme_latest_price}}</h4> 
+                </div>
+            </div>
+            <div class="horizontal" >
+                <h4 class="home_index">원유</h4> 
+                <div style='position: absolute; right: 3vh;'>  
+                <h4 class="home_index_value">$ {{orb_latest_price}}</h4> 
+                </div>
+            </div>
             
             
         </div>

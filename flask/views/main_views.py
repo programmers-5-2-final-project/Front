@@ -16,9 +16,25 @@ def index():
 
 @bp.route("/home", methods=["GET", "POST"])
 def home():
+    from .connect_db import (
+        get_simbol_company_list_dict,
+        get_top_level_list,
+        get_world_index,
+        get_material_latest_price,
+    )
+
+    # 세계 주요 지수 가져오기
+    index_usd_krw_exchange_rate = get_world_index("index_usd_krw_exchange_rate")
+    index_kospi = get_world_index("index_kospi")
+    index_nasdaq = get_world_index("index_nasdaq")
+    index_snp = get_world_index("index_snp")
+    index_djia = get_world_index("index_djia")
+
+    # 코스피 상위 50 거래량
+    _, kospi_top_volume_dict = get_top_level_list("volume", "kospi")
+
     # 1. 종목 목록 가져오기 -> 검색 구현
     # 1) 코스피, 2) 나스닥, 3) snp, 4) 원자재
-    from .connect_db import get_simbol_company_list_dict, get_top_level_list
 
     kospi_simbol_company_dict = get_simbol_company_list_dict("kospi")
     nasdaq_simbol_company_dict = get_simbol_company_list_dict("nasdaq")
@@ -42,9 +58,15 @@ def home():
     _, nasdaq_top_fluctuation_rate_dict = get_top_level_list(
         "fluctuation_rate", "nasdaq"
     )
-    _, snp_top_fluctuation_rate_dict = get_top_level_list(
-        "fluctuation_rate", "snp"
-    )
+    _, snp_top_fluctuation_rate_dict = get_top_level_list("fluctuation_rate", "snp")
+
+    # 원자재 최신 가격
+    (
+        gold_latest_price,
+        silver_latest_price,
+        cme_latest_price,
+        orb_latest_price,
+    ) = get_material_latest_price()
 
     if request.method == "GET":
         return render_template("home.html", **locals())  # html에 잘 넘겨줘야함
@@ -68,7 +90,9 @@ def detail():
     from .connect_db import get_market_individual_data, get_simbol_company_list_dict
 
     symbols = get_simbol_company_list_dict(market)
+
     company_name = symbols[symbol]
+
     _, individual_stock_json_data = get_market_individual_data(market, symbol)
 
     if market in ["kospi", "nasdaq", "snp"]:
