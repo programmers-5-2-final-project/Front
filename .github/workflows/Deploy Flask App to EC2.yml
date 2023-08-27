@@ -7,26 +7,40 @@ on:
       - completed
       
 jobs:
-  test-ec2-connection:
+  deploy-to-ec2:
+    name: Deploy Dockerized Flask App to EC2 Instance
     runs-on: ubuntu-latest
 
     steps:
-    - name: "context"
+    - name: Display Commit ID
       env:
         COMMIT_ID: ${{ github.sha }}
-      run: echo "Commit id => $COMMIT_ID"
-    - name: Execute g on EC2
+      run: echo "Commit ID: $COMMIT_ID"
+    
+    - name: Deploy Flask App to EC2 via SSH
       env:
         PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
         HOST: ${{ secrets.EC2_HOST }}
         USER: ${{ secrets.EC2_USER }}
       run: |
+        # Create a private key file from the GitHub secret
         echo "$PRIVATE_KEY" > private_key.pem
         chmod 600 private_key.pem
-        ssh -o StrictHostKeyChecking=no -i private_key.pem $USER@$HOST "\
+        
+        # SSH into the EC2 instance and execute Docker commands
+        ssh -o StrictHostKeyChecking=no -i private_key.pem $USER@$HOST "
+        # Pull the latest Docker image for the Flask app
         sudo docker pull de52/flask_stock:latest
+        
+        # Stop and remove any existing containers named 'flask_app'
         sudo docker stop flask_app || true
         sudo docker rm flask_app || true
-        sudo docker run --name flask_app --env-file /home/ubuntu/.flaskenv -p 5000:5000 de52/flask_stock:latest; \
-        sudo docker ps; \
-        rm -f private_key.pem"
+        
+        # Run a new container for the Flask app
+        sudo docker run --name flask_app --env-file /home/ubuntu/.flaskenv -p 5000:5000 de52/flask_stock:latest
+        
+        # Display the list of running containers
+        sudo docker ps"
+        
+        # Cleanup: Remove the private key file
+        rm -f private_key.pem
