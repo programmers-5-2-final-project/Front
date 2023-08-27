@@ -1,10 +1,10 @@
 name: Build and Push Flask Docker Image
 
 on:
-  push:
-    branches:
-      - main
-      - feature/dahye
+  workflow_run:
+    workflows: ["Flask CI"]
+    types:
+      - completed
 jobs:
   build:
     runs-on: ubuntu-latest
