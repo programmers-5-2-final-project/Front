@@ -6,9 +6,22 @@ from datetime import datetime
 """
 세계 지수 수집하기 위한 파이썬 파일
 """
+import os
 
-# RDS 연결 설정
-CONFIG = dotenv_values(".flaskenv")  # .env 파일에 DB 연결 정보 설정
+# RDS connection setup
+CONFIG = {}
+
+# Check if a specific secret (e.g., POSTGRES_USER) is set in the environment
+if "POSTGRES_USER" in os.environ:
+    # Running in GitHub Actions or a similar environment with secrets
+    CONFIG["POSTGRES_USER"] = os.environ["POSTGRES_USER"]
+    CONFIG["POSTGRES_PASSWORD"] = os.environ["POSTGRES_PASSWORD"]
+    CONFIG["POSTGRES_HOST"] = os.environ["POSTGRES_HOST"]
+    CONFIG["POSTGRES_PORT"] = os.environ["POSTGRES_PORT"]
+else:
+    # Local development
+    CONFIG = dotenv_values(".flaskenv")
+
 db_config = {
     "dbname": "dev",
     "user": CONFIG["POSTGRES_USER"],

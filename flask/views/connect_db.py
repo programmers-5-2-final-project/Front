@@ -229,8 +229,21 @@ def conn_db_get_json_data(query):
     - output : column_names(list), json_data(list : [{}, {}])
     """
     from dotenv import dotenv_values
+    import os
 
-    CONFIG = dotenv_values(".flaskenv")
+    # RDS connection setup
+    CONFIG = {}
+
+    # Check if a specific secret (e.g., POSTGRES_USER) is set in the environment
+    if "POSTGRES_USER" in os.environ:
+        # Running in GitHub Actions or a similar environment with secrets
+        CONFIG["POSTGRES_USER"] = os.environ["POSTGRES_USER"]
+        CONFIG["POSTGRES_PASSWORD"] = os.environ["POSTGRES_PASSWORD"]
+        CONFIG["POSTGRES_HOST"] = os.environ["POSTGRES_HOST"]
+        CONFIG["POSTGRES_PORT"] = os.environ["POSTGRES_PORT"]
+    else:
+        # Local development
+        CONFIG = dotenv_values(".flaskenv")
     db_config = {
         "dbname": "dev",
         "user": CONFIG["POSTGRES_USER"],
