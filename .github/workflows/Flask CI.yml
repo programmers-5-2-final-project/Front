@@ -1,7 +1,10 @@
 name: Flask CI
 
-on: [push]
-
+on:
+  push:
+    branches:
+      - main  # or whichever branch you prefer
+      
 jobs:
   build:
     runs-on: ubuntu-latest
