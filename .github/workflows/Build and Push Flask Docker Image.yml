@@ -1,0 +1,25 @@
+name: Build and Push Flask Docker Image
+
+on:
+  push:
+    branches:
+      - main
+      - feature/dahye
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Build Docker Image
+      run: |
+        docker build -t de52/flask_stock:latest .
+
+    - name: Login to Docker Hub
+      run: echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
+
+    - name: Push Docker Image
+      run: |
+        docker push de52/flask_stock:latest
