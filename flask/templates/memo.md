@@ -17,7 +17,9 @@
 
 [update] 상단바 통일
 
----
+[update] 모바일에서 안깨지게 수정
+
+--- 
 [update] 홈 세계 지수 구현, 가격 추가 
 
 "raw_data.index_usd_krw_exchange_rate", 원-달러 환율

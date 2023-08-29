@@ -74,13 +74,6 @@ def home():
     return render_template("home.html", **locals())
 
 
-@bp.route("/detail_test")
-def detail_test():
-    market = request.args.get("market", "")
-    symbol = request.args.get("symbol", "")
-    return [market, symbol]
-
-
 # 상세 페이지 라우트와 템플릿 예시
 @bp.route("/detail")
 def detail():
@@ -140,39 +133,3 @@ def detail():
 
     # 이후 render_template을 사용하여 상세 정보를 템플릿에 전달하여 표시
     return render_template("detail.html", **locals())
-
-
-from .connect_db import conn_test_db_get_json_data
-
-
-@bp.route("/dashboard")
-def dashboard():  # 컴퍼니 값을 받으면 심볼로 가져오는거겠지 ?
-    symbol = request.args.get("company", "")  # 매개변수로부터 가져오는 것
-    print("****", symbol)
-
-    _, json_data = conn_test_db_get_json_data(f"analytics.krx_stock_{symbol}")
-    data = []
-    for row in json_data:
-        row["close"] = int(row["close"])
-        data.append(row)
-
-    # 반환하는거 : List
-    # [row, row] row : dict
-    return render_template("krx_stock/dashboard.html", data=data)
-
-
-@bp.route("/test")
-def test():  # 컴퍼니 값을 받으면 심볼로 가져오는거겠지 ?
-    # symbol = request.args.get("company", "") # 매개변수로부터 가져오는 것
-    symbol = "000140"
-    print("****", symbol)
-
-    _, json_data = conn_test_db_get_json_data(f"analytics.krx_stock_{symbol}")
-    data = []
-    for row in json_data:
-        row["close"] = int(row["close"])
-        data.append(row)
-
-    # 반환하는거 : List
-    # [row, row] row : dict
-    return render_template("krx_stock/dashboard_test.html", **locals())
