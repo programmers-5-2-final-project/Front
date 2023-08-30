@@ -168,7 +168,7 @@ def get_simbol_company_list_dict(market):
 
     - input : x
         - label = "kospi_list"
-        - column_names, json_data = kospi_conn_test_db_get_json_data(f"analytics.{label}")
+        - column_names, json_data = kospi_conn_db_get_json_data(f"analytics.{label}")
     - output : dict = {종목코드 : '회사이름'}
 
     테이블 이름 analyics.kospi_list (현재 test db에 위치)
