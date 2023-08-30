@@ -359,7 +359,7 @@
             <div class="scrollable-list mt-3">
                 <table class="stock-list">
                     <tbody>
-                    {% for stock in nasdaq_top_market_capitalization_dict %}
+                    {% for stock in snp_top_market_capitalization_dict %}
                     <tr>
                         <td>{{ stock['rank'] }}</td>
                         <td class="td_name"><a href="/main/detail?market=snp&symbol={{ stock['symbol'] }}">{{ stock['name'] }}</td>
@@ -391,7 +391,7 @@
             <div class="scrollable-list mt-3">
                 <table class="stock-list">
                     <tbody>
-                    {% for stock in nasdaq_top_fluctuation_rate_dict %}
+                    {% for stock in snp_top_fluctuation_rate_dict %}
                     <tr>
                         <td>{{ stock['rank'] }}</td>
                         <td class="td_name"><a href="/main/detail?market=snp&symbol={{ stock['symbol'] }}">{{ stock['name'] }}</td>
@@ -428,6 +428,8 @@
                     <option value="nasdaq"></option>
                 </select>-->
                 <!-- 드롭다운 -->
+                <!-- 드롭다운 -->
+                
                 <input type="hidden" name="market" value="material">  
                 <select name="symbol" id="symbol" class="form-control">
                     <!-- {symbol : name} -->
