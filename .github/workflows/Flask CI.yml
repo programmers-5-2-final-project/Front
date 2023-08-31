@@ -4,14 +4,54 @@ on:
   push:
     branches:
       - main  # or whichever branch you prefer
-      
+    
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Code
+    - name: 코드 체크아웃
       uses: actions/checkout@v2
+
+    - name: Python 3.8 설정
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: ls -tl 실행
+      run: ls -tl
+      
+    - name: 의존성 설치
+      run: |
+        python -m pip install --upgrade pip
+        pip install flask
+        pip install -r requirements.txt
+
+    # black formatter 추가
+    - name: Black 코드 포맷 체크
+      run: |
+        pip install black
+        black --check .
+
+    # flake8 추가
+    - name: Flake8 Lint
+      run: |
+        pip install flake8
+        flake8 .
+
+    - name: Flask 테스트 실행
+      env:
+        POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+        POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+        POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+        POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+        POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
+      run: |
+        cd flask;
+        python app.py &
+        sleep 10
+        curl http://127.0.0.1:5000/main/home
+
 
     - name: Set up Python 3.8
       uses: actions/setup-python@v2
